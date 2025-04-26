@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgrammesRattachesAuxChantiersTable extends Migration
+class CreateProgrammesTable extends Migration
 {
     public function up()
     {
-        Schema::create('programmes_rattaches_aux_chantiers', function (Blueprint $table) {
+        Schema::create('programmes', function (Blueprint $table) {
             $table->id('id_programme');
             $table->integer('code_du_programme');
             $table->text('description_du_programme')->nullable();
@@ -16,12 +16,12 @@ class CreateProgrammesRattachesAuxChantiersTable extends Migration
             $table->timestamps();
 
             // Foreign key
-            $table->foreign('id_chantier')->references('id_chantier')->on('chantiers_de_travail');
+            $table->foreign('id_chantier')->references('id_chantier')->on('chantiers');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('programmes_rattaches_aux_chantiers');
+        Schema::dropIfExists('programmes');
     }
 }

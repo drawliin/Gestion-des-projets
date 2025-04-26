@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChantiersDeTravailTable extends Migration
+class CreateChantiersTable extends Migration
 {
     public function up()
     {
-        Schema::create('chantiers_de_travail', function (Blueprint $table) {
+        Schema::create('chantiers', function (Blueprint $table) {
             $table->id('id_chantier');
             $table->integer('code_du_chantier');
             $table->text('description_du_chantier')->nullable();
@@ -16,13 +16,13 @@ class CreateChantiersDeTravailTable extends Migration
             $table->timestamps();
 
             // Foreign key
-            $table->foreign('id_domaine')->references('id_domaine')->on('domaines_thematiques');
+            $table->foreign('id_domaine')->references('id_domaine')->on('domaines');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('chantiers_de_travail');
+        Schema::dropIfExists('chantiers');
     }
 }
 

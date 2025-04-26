@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjetsPrincipauxTable extends Migration
+class CreateProjetsTable extends Migration
 {
     public function up()
     {
-        Schema::create('projets_principaux', function (Blueprint $table) {
+        Schema::create('projets', function (Blueprint $table) {
             $table->id('id_projet');
             $table->string('code_du_projet');
             $table->string('nom_du_projet', 100);
@@ -27,14 +27,14 @@ class CreateProjetsPrincipauxTable extends Migration
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign('id_domaine')->references('id_domaine')->on('domaines_thematiques');
-            $table->foreign('id_chantier')->references('id_chantier')->on('chantiers_de_travail');
-            $table->foreign('id_programme')->references('id_programme')->on('programmes_rattaches_aux_chantiers');
+            $table->foreign('id_domaine')->references('id_domaine')->on('domaines');
+            $table->foreign('id_chantier')->references('id_chantier')->on('chantiers');
+            $table->foreign('id_programme')->references('id_programme')->on('programmes');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('projets_principaux');
+        Schema::dropIfExists('projets');
     }
 }

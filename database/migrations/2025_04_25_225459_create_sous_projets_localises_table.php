@@ -35,7 +35,7 @@ class CreateSousProjetsLocalisesTable extends Migration
             // Foreign keys
             $table->foreign('id_province')->references('id_province')->on('provinces');
             $table->foreign('id_commune')->references('id_commune')->on('communes');
-            $table->foreign('id_projet')->references('id_projet')->on('projets_principaux');
+            $table->foreign('id_projet')->references('id_projet')->on('projets');
         });
     }
 
