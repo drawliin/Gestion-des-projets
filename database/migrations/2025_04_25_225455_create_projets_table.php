@@ -20,16 +20,16 @@ class CreateProjetsTable extends Migration
             $table->string('etat_d_avancement_financier', 50)->nullable();
             $table->text('commentaires')->nullable();
 
-            $table->unsignedBigInteger('id_domaine');
-            $table->unsignedBigInteger('id_chantier');
+            $table->unsignedBigInteger('id_province')->nullable();
+            $table->unsignedBigInteger('id_commune')->nullable();
             $table->unsignedBigInteger('id_programme');
 
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign('id_domaine')->references('id_domaine')->on('domaines');
-            $table->foreign('id_chantier')->references('id_chantier')->on('chantiers');
             $table->foreign('id_programme')->references('id_programme')->on('programmes');
+            $table->foreign('id_province')->references('id_province')->on('provinces');
+            $table->foreign('id_commune')->references('id_commune')->on('communes');
         });
     }
 

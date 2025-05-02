@@ -22,15 +22,5 @@ class Chantier extends Model
     {
         return $this->belongsTo(Domaine::class, 'id_domaine');
     }
-
-    public function programmes()
-    {
-        return $this->hasMany(Programme::class, 'id_chantier');
-    }
-
-    public function projetsPrincipaux()
-    {
-        return $this->hasMany(Projet::class, 'id_chantier');
-    }
 }
 

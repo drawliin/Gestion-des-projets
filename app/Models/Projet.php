@@ -22,19 +22,19 @@ class Projet extends Model
         'etat_d_avancement_physique',
         'etat_d_avancement_financier',
         'commentaires',
-        'id_domaine',
-        'id_chantier',
+        'id_province',
+        'id_commune',
         'id_programme',
     ];
 
-    public function domaine()
+    public function province()
     {
-        return $this->belongsTo(Domaine::class, 'id_domaine');
+        return $this->belongsTo(Province::class, 'id_province');
     }
 
-    public function chantier()
+    public function commune()
     {
-        return $this->belongsTo(Chantier::class, 'id_chantier');
+        return $this->belongsTo(Commune::class, 'id_commune');
     }
 
     public function programme()

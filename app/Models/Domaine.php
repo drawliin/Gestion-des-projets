@@ -22,9 +22,4 @@ class Domaine extends Model
     {
         return $this->hasMany(Chantier::class, 'id_domaine');
     }
-
-    public function projets()
-    {
-        return $this->hasMany(Projet::class, 'id_domaine');
-    }
 }
