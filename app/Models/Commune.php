@@ -16,11 +16,18 @@ class Commune extends Model
         'code_commune',
         'nom_fr',
         'nom_ar',
+        'id_province',
     ];
 
+    // Relation avec la province
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'id_province');
+    }
+
+    // Relation avec SousProjetLocalise
     public function sousProjetsLocalises()
     {
         return $this->hasMany(SousProjetLocalise::class, 'id_commune');
     }
 }
-

@@ -10,6 +10,8 @@ class SousProjetLocalise extends Model
     use HasFactory;
 
     protected $table = 'sous_projets_localises';
+    protected $primaryKey = 'code_du_sous_projet';
+
     public $timestamps = true;
 
     protected $fillable = [

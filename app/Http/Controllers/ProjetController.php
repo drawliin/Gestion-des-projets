@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Projet;
+use App\Models\Commune;
+use App\Models\Province;
+use App\Models\Programme;
+use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+
+class ProjetController extends Controller
+{
+    public function index()
+    {
+        $projets = Projet::with(['programme', 'province', 'commune'])->get();
+        return view('projet.index', compact('projets'));
+    }
+
+    public function create()
+    {
+        $programmes = Programme::all();
+        $provinces = Province::all();
+        $communes = Commune::all();
+
+        return view('projet.create', compact('programmes', 'provinces', 'communes'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'code_du_projet' => 'required|unique:projets,code_du_projet',
+            'nom_du_projet' => 'required|string',
+            'cout_cro' => 'required|numeric',
+            'cout_total_du_projet' => 'required|numeric',
+            'date_debut' => 'required|date',
+            'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
+            'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
+            'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
+            'commentaires' => 'nullable|string',
+            'id_province' => 'required|exists:provinces,id_province',
+            'id_commune' => 'required|exists:communes,id_commune',
+            'id_programme' => 'required|exists:programmes,id_programme',
+        ]);
+
+        Projet::create($request->all());
+        return redirect()->route('projet.index')->with('success', 'Projet ajouté avec succès.');
+    }
+
+    public function show($id){
+    // Récupérer le projet avec ses relations (programme, province, commune)
+    $projet = Projet::with(['programme', 'province', 'commune'])->findOrFail($id);
+
+    return view('projet.details', compact('projet'));
+}
+
+    public function edit($id)
+    {
+        $projet = Projet::findOrFail($id);
+        $programmes = Programme::all();
+        $provinces = Province::all();
+        $communes = Commune::all();
+
+        return view('projet.edit', compact('projet', 'programmes', 'provinces', 'communes'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $projet = Projet::findOrFail($id);
+
+        $request->validate([
+            'code_du_projet' => 'required|unique:projets,code_du_projet,' . $id . ',id_projet',
+            'nom_du_projet' => 'required|string',
+            'cout_cro' => 'required|numeric',
+            'cout_total_du_projet' => 'required|numeric',
+            'date_debut' => 'required|date',
+            'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
+            'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
+            'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
+            'commentaires' => 'nullable|string',
+            'id_province' => 'required|exists:provinces,id_province',
+            'id_commune' => 'required|exists:communes,id_commune',
+            'id_programme' => 'required|exists:programmes,id_programme',
+        ]);
+
+        $projet->update($request->all());
+        return redirect()->route('projet.index')->with('success', 'Projet modifié avec succès.');
+    }
+
+    public function destroy($id)
+    {
+        try{
+        $projet = Projet::findOrFail($id);
+        $projet->delete();
+        return redirect()->route('projet.index')->with('success', 'Projet supprimé avec succès.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') {
+            return redirect()->route('projet.index')
+                ->with('error', 'Impossible de supprimer ce projet : il est lié à un ou plusieurs sous-projets ou d’autres entités.');
+        }
+
+        return redirect()->route('projet.index')
+            ->with('error', 'Une erreur est survenue lors de la suppression.');
+    }
+    }
+}

@@ -2,12 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProjectController; // Ajoute ce use en haut si pas encore fait
+use App\Http\Controllers\ProjetController;
+use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\DomaineController;
+use App\Http\Controllers\ChantierController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\ProgrammeController;
+use App\Http\Controllers\SousprojetController;
 
-Route::get('/projets',function(){
-    return view('welcome');
-});
-Route::get('/sous-projets',function(){
-    return view('sousprojet');
-});
+Route::resource('province', ProvinceController::class);
+
+Route::resource('commune', CommuneController::class);
+
+Route::resource('domaine', DomaineController::class);
+
+Route::resource('chantier', ChantierController::class);
+
+Route::resource('programme', ProgrammeController::class);
+
+Route::resource('projet', ProjetController::class);
+
+Route::resource('sousprojet', SousprojetController::class);
+
+
 
