@@ -13,7 +13,8 @@ class CreateSousProjetsLocalisesTable extends Migration
             $table->unsignedBigInteger('id_commune');
             $table->unsignedBigInteger('id_projet');
 
-            $table->id('code_du_sous_projet');
+            $table->id();
+            $table->string('code_du_sous_projet');
             $table->string('nom_du_sous_projet', 100);
             $table->string('secteur_concerne', 100);
             $table->string('site', 100);

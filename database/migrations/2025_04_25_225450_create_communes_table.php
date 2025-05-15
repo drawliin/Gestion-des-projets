@@ -13,7 +13,7 @@ class CreateCommunesTable extends Migration
             $table->string('code_commune', 100);
             $table->string('nom_fr', 400);
             $table->string('nom_ar', 400);
-            $table->unsignedBigInteger('id_province')->nullable()->change();
+
             $table->timestamps();
         });
     }

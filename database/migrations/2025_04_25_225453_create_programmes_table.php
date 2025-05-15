@@ -10,7 +10,7 @@ class CreateProgrammesTable extends Migration
     {
         Schema::create('programmes', function (Blueprint $table) {
             $table->id('id_programme');
-            $table->integer('code_du_programme');
+            $table->string('code_du_programme');
             $table->text('description_du_programme')->nullable();
             $table->unsignedBigInteger('id_chantier');
             $table->timestamps();

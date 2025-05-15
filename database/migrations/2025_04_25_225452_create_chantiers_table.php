@@ -10,7 +10,7 @@ class CreateChantiersTable extends Migration
     {
         Schema::create('chantiers', function (Blueprint $table) {
             $table->id('id_chantier');
-            $table->integer('code_du_chantier');
+            $table->string('code_du_chantier');
             $table->text('description_du_chantier')->nullable();
             $table->unsignedBigInteger('id_domaine');
             $table->timestamps();

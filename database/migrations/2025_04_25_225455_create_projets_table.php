@@ -11,7 +11,7 @@ class CreateProjetsTable extends Migration
         Schema::create('projets', function (Blueprint $table) {
             $table->id('id_projet');
             $table->string('code_du_projet');
-            $table->string('nom_du_projet', 100);
+            $table->string('nom_du_projet');
             $table->decimal('cout_cro', 20, 2)->nullable();
             $table->decimal('cout_total_du_projet', 20, 2)->nullable();
             $table->date('date_debut')->nullable();

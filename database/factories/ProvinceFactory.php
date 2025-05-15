@@ -21,13 +21,18 @@ class ProvinceFactory extends Factory
     public function definition(): array
     
     {
-        $faker = \Faker\Factory::create('fr_FR'); // Set Faker's locale to French for one language
-        $fakerAr = \Faker\Factory::create('ar_SA'); // Set Faker's locale to Arabic for another language
-
         return [
-            'code_province' => $this->faker->unique()->countryCode(),
-            'description_province_fr' => $faker->sentence(), // French
-            'description_province_ar' => $fakerAr->sentence(), // Arabic
+            'code_province' => $this->faker->unique()->postcode,
+            'description_province_fr' => $this->faker->unique()->randomElement([
+                'Tanger-Assilah', 'Tétouan', 'Larache', 'Chefchaouen', 'Al Hoceïma',
+                'Fès', 'Meknès', 'Taza', 'Ifrane', 'Oujda-Angad', 'Nador',
+                'Agadir Ida-Outanane', 'Taroudant', 'Guelmim', 'Laâyoune', 'Dakhla',
+            ]),
+            'description_province_ar' => $this->faker->unique()->randomElement([
+                'طنجة-أصيلة', 'تطوان', 'العرائش', 'شفشاون', 'الحسيمة',
+                'فاس', 'مكناس', 'تازة', 'إفران', 'وجدة-أنكاد', 'الناظور',
+                'أكادير إدا وتنان', 'تارودانت', 'كلميم', 'العيون', 'الداخلة',
+            ]),
         ];
     }
 }

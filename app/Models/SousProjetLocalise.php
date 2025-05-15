@@ -12,8 +12,6 @@ class SousProjetLocalise extends Model
     protected $table = 'sous_projets_localises';
     protected $primaryKey = 'code_du_sous_projet';
 
-    public $timestamps = true;
-
     protected $fillable = [
         'id_province',
         'id_commune',
