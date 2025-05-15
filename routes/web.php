@@ -9,6 +9,7 @@ use App\Http\Controllers\ChantierController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\ProgrammeController;
 use App\Http\Controllers\SousprojetController;
+use App\Http\Controllers\LoginController;
 
 Route::resource('province', ProvinceController::class);
 
@@ -23,6 +24,12 @@ Route::resource('programme', ProgrammeController::class);
 Route::resource('projet', ProjetController::class);
 
 Route::resource('sousprojet', SousprojetController::class);
+
+
+
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/', [LoginController::class, 'login']);
+
 
 
 

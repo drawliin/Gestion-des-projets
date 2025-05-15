@@ -1,0 +1,116 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, white, black, grey);
+  background-size: cover;
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Main container with 2 panels */
+.login-wrapper {
+  display: flex;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 900px;
+  width: 95%;
+  height: 500px;
+}
+
+/* Left panel – login form */
+.login-left {
+  flex: 1;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.login-left h2 {
+  margin-bottom: 25px;
+  color: #1f2937;
+  font-size: 28px;
+  text-align: center;
+}
+
+.login-left input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  color: #111;
+}
+
+.login-left button {
+  width: 100%;
+  padding: 12px;
+  background-color: #facc15;
+  border: none;
+  border-radius: 10px;
+  color: #1f2937;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-left button:hover {
+  background-color: #f59e0b;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 15px;
+  color: #fff;
+}
+
+.login-footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Right panel – content/image */
+.login-right {
+  flex: 1;
+  background: url('https://source.unsplash.com/600x800/?technology') no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+
+.login-right::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 41, 59, 0.4); /* semi-transparent overlay */
+  backdrop-filter: blur(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+  .login-right {
+    display: none;
+  }
+}

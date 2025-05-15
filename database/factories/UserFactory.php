@@ -19,7 +19,7 @@ class UserFactory extends Factory
         return [
             'email' => $this->faker->unique()->safeEmail(),
             'password' => 'password',
-            'role' => $this->faker->randomElement(['admin', 'directeur', 'gestionnaire', 'responsable_financier']),
+            //'role' => $this->faker->randomElement(['admin', 'directeur', 'gestionnaire', 'responsable_financier']),
             'remember_token' => Str::random(10),
         ];
     }
