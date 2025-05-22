@@ -120,9 +120,12 @@
       <div class="user-nav">
         <ul>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa-solid fa-right-from-bracket"></i> <span>Log out</span>
-            </a>
+            <form action="{{route("logout")}}" method="Post">
+              @csrf
+              <button type="submit" class="btn-logout">
+                <i class="fa-solid fa-right-from-bracket"></i> <span>Log out</span>
+              </button>
+            </form>
           </li>
         </ul>
       </div>
