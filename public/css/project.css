@@ -294,6 +294,9 @@ table tbody tr:hover {
     display: flex;
     gap: 10px;
   }
+  .form-actions a{
+    text-decoration: none;
+  }
 
   .btn-icon {
     background: none;

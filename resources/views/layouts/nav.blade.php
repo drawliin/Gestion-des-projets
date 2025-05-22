@@ -22,35 +22,35 @@
 
     }
 
-/* Style pour les éléments de la barre latérale */
-.nav-item {
-    
+    /* Style pour les éléments de la barre latérale */
+    .nav-item {
+        
 
-  margin: 8px 0;         /* Espacement vertical */
-  margin-right: 60px;    /* Espacement à droite */
-}
+      margin: 8px 0;         /* Espacement vertical */
+      margin-right: 60px;    /* Espacement à droite */
+    }
 
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;             /* Espacement entre l'icône et le texte */
-  padding: 8px 12px;
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;             /* Espacement entre l'icône et le texte */
+      padding: 8px 12px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
 
-.nav-link i {
-  font-size: 18px;       /* Taille de l'icône */
-}
+    .nav-link i {
+      font-size: 18px;       /* Taille de l'icône */
+    }
 
-.nav-link span {
-  margin-left: 10px;      /* Marge entre l'icône et le texte */
-}
+    .nav-link span {
+      margin-left: 10px;      /* Marge entre l'icône et le texte */
+    }
 
-.nav-link:hover {
-  background-color: #444; /* Couleur de fond au survol */
-}
+    .nav-link:hover {
+      background-color: #444; /* Couleur de fond au survol */
+    }
 
 
 
@@ -59,6 +59,7 @@
       border-top: 1px solid #ccc;
     }
   </style>
+  
 </head>
 <body>
   <div class="app-container">
@@ -120,7 +121,7 @@
         <ul>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fas fa-users"></i> <span>Utilisateurs</span>
+              <i class="fa-solid fa-right-from-bracket"></i> <span>Log out</span>
             </a>
           </li>
         </ul>
