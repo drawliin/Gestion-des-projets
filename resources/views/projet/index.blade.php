@@ -43,7 +43,7 @@
             <th>Nom</th>
             <th>Province</th>
             <th>Commune</th>
-            <th>Date Début</th>
+            <th>Année Début</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -54,7 +54,7 @@
               <td>{{ $projet->nom_du_projet }}</td>
               <td>{{ $projet->province->description_province_fr ?? ''}}</td>
               <td>{{ $projet->commune->nom_fr ?? ''}}</td>
-              <td>{{ $projet->date_debut }}</td>
+              <td>{{ $projet->annee_debut }}</td>
               <td>
                 <!-- Lien "Voir" stylisé avec une icône -->
                 <a href="{{ route('projet.show', $projet->id_projet) }}" class="btn-action btn-view" title="Voir">

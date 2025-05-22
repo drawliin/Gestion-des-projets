@@ -69,15 +69,15 @@
               </select>
           </div>
           <div class="form-group">
-            <label for="date_debut">Date Début *</label>
-            <input type="date" id="date_debut" name="date_debut" value="{{ $projet->date_debut }}" required>
+            <label for="annee_debut">Année Début *</label>
+            <input type="date" id="annee_debut" name="annee_debut" value="{{ $projet->annee_debut }}" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="date_fin_prevue">Date Fin Prévue *</label>
-            <input type="date" id="date_fin_prevue" name="date_fin_prevue" value="{{ $projet->date_fin_prevue }}" required>
+            <label for="annee_fin_prevue">Date Fin Prévue *</label>
+            <input type="date" id="annee_fin_prevue" name="annee_fin_prevue" value="{{ $projet->annee_fin_prevue }}" required>
           </div>
           <div class="form-group">
             <label for="etat_d_avancement_physique">Avancement Physique (%)</label>

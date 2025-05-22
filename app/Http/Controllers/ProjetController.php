@@ -18,7 +18,7 @@ class ProjetController extends Controller
         if($search){
             $projets = Projet::with(['programme', 'province', 'commune'])->where("code_du_projet", "like", "%{$search}%")
                 ->orWhere("nom_du_projet", "like", "%{$search}%")
-                ->orWhere("date_debut", "like", "%{$search}%")
+                ->orWhere("annee_debut", "like", "%{$search}%")
                 ->orWhereHas('province', function ($query) use ($search) {
                     $query->where("description_province_fr", "like", "%{$search}%");
                 })
@@ -49,8 +49,8 @@ class ProjetController extends Controller
             'nom_du_projet' => 'required|string',
             'cout_cro' => 'required|numeric',
             'cout_total_du_projet' => 'required|numeric',
-            'date_debut' => 'required|date',
-            'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
+            'annee_debut' => 'required|date',
+            'annee_fin_prevue' => 'required|date|after_or_equal:annee_debut',
             'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
             'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
             'commentaires' => 'nullable|string',
@@ -89,8 +89,8 @@ class ProjetController extends Controller
             'nom_du_projet' => 'required|string',
             'cout_cro' => 'required|numeric',
             'cout_total_du_projet' => 'required|numeric',
-            'date_debut' => 'required|date',
-            'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
+            'annee_debut' => 'required|date',
+            'annee_fin_prevue' => 'required|date|after_or_equal:annee_debut',
             'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
             'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
             'commentaires' => 'nullable|string',

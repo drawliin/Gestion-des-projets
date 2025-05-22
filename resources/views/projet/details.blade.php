@@ -41,15 +41,15 @@
           <div>{{ $projet->commune?->nom_fr }}</div>
         </div>
         <div class="form-group">
-          <label>Date Début</label>
-          <div>{{ $projet->date_debut }}</div>
+          <label>Année Début</label>
+          <div>{{ $projet->annee_debut }}</div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label>Date Fin Prévue</label>
-          <div>{{ $projet->date_fin_prevue }}</div>
+          <div>{{ $projet->annee_fin_prevue }}</div>
         </div>
         <div class="form-group">
           <label>Avancement Physique (%)</label>
