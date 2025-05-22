@@ -11,9 +11,21 @@ class ProgrammeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $programmes = Programme::with('chantier')->get();
+        $search = $request->input("search");
+
+        if($search){
+            $programmes = Programme::with('chantier')->where("code_du_programme", "like", "%{$search}%")
+                ->orWhere("description_du_programme", "like", "%{$search}%")
+                 ->orWhereHas('chantier', function ($query) use ($search) {
+                    $query->where("description_du_chantier", "like", "%{$search}%");
+                })
+                ->get();
+        }else{
+            $programmes = Programme::with('chantier')->get();
+        }
+        
         return view('programme.index', compact('programmes'));
     }
 

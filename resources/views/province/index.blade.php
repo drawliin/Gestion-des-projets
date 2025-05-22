@@ -13,18 +13,26 @@
     <div class="form-content">
         <div class="form-title">
             @if (session('success'))
-            <div class="custom-alert success">
-               {{ session('success') }}
-            </div>
-       @endif
+                <div class="custom-alert success">
+                {{ session('success') }}
+                </div>
+            @endif
 
-       @if (session('error'))
-           <div class="custom-alert error">
-           {{ session('error') }}
-           </div>
-       @endif
+            @if (session('error'))
+                <div class="custom-alert error">
+                {{ session('error') }}
+                </div>
+            @endif
             <h2>LISTE DES</h2>
             <h1>Provinces</h1>
+
+            <form action="{{ route('province.index') }}" method="GET" style="display: flex; align-items: center;    gap: 8px; margin-top: 10px;">
+                <input type="text" name="search" placeholder="Rechercher..." value="{{ request('search') }}" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                <button type="submit" class="btn-action btn-edit" title="Rechercher">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
         </div>
 
         <table class="styled-table">

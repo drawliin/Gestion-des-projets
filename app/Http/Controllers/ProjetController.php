@@ -11,9 +11,25 @@ use Illuminate\Database\QueryException;
 
 class ProjetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projets = Projet::with(['programme', 'province', 'commune'])->get();
+        $search = $request->input("search");
+
+        if($search){
+            $projets = Projet::with(['programme', 'province', 'commune'])->where("code_du_projet", "like", "%{$search}%")
+                ->orWhere("nom_du_projet", "like", "%{$search}%")
+                ->orWhere("date_debut", "like", "%{$search}%")
+                ->orWhereHas('province', function ($query) use ($search) {
+                    $query->where("description_province_fr", "like", "%{$search}%");
+                })
+                ->orWhereHas('commune', function ($query) use ($search) {
+                    $query->where("nom_fr", "like", "%{$search}%");
+                })
+                ->get();
+        }else{
+            $projets = Projet::with(['programme', 'province', 'commune'])->get();
+        }
+        
         return view('projet.index', compact('projets'));
     }
 

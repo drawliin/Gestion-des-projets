@@ -138,6 +138,9 @@ table tbody tr:hover {
     background-color: #dc3545;
     border-color: #f0f0f0;
   }
+  .btn-delete:hover i {
+    color: #ddd;
+  }
   .alert-error {
     background-color: #ffe5e5;
     border: 1px solid #ff4d4d;

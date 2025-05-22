@@ -11,9 +11,18 @@ class CommuneController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
+    if ($search) {
+        $communes = Commune::where('nom_fr', 'like', "%{$search}%")
+            ->orWhere('nom_ar', 'like', "%{$search}%")
+            ->orWhere('code_commune', 'like', "%{$search}%")
+            ->get();
+    } else {
         $communes = Commune::all();
+    }
         return view('commune.index', compact('communes'));
     }
 

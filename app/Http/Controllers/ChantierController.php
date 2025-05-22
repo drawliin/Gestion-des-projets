@@ -11,10 +11,22 @@ class ChantierController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
-    public function index()
+    */
+    public function index(Request $request)
     {
-        $chantiers = Chantier::with('domaine')->get();
+
+        $search = $request->input("search");
+
+        if($search){
+            $chantiers = Chantier::with('domaine')->where("code_du_chantier", "like", "%{$search}%")
+                ->orWhere("description_du_chantier", "like", "%{$search}%")
+                 ->orWhereHas('domaine', function ($query) use ($search) {
+                    $query->where("description_fr", "like", "%{$search}%");
+                })
+                ->get();
+        }else{
+            $chantiers = Chantier::with('domaine')->get();        
+        }
         return view('chantier.index', compact('chantiers'));
     }
 

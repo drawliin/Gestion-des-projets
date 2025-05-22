@@ -10,12 +10,23 @@ class DomaineController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $domaines = Domaine::all();
-        return view('domaine.index', compact('domaines'));
+    */
 
+    public function index(Request $request){
+
+        $search = $request->input("search");
+
+        if($search){
+            $domaines = Domaine::where("code_du_domaine", "like", "%{$search}%")
+                ->orWhere("description_fr", "like", "%{$search}%")
+                ->orWhere("description_ar", "like", "%{$search}%")
+                ->get();
+        }else{
+            $domaines = Domaine::all();        
+        }
+
+        return view('domaine.index', compact('domaines'));
+    
     }
 
     /**
@@ -26,9 +37,7 @@ class DomaineController extends Controller
         return view('domaine.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
          $request->validate([

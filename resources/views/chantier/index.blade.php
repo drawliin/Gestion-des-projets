@@ -26,6 +26,14 @@
    @endif
       <h2>LISTE DES</h2>
       <h1>Chantiers</h1>
+
+      <form action="{{ route('chantier.index') }}" method="GET" style="display: flex; align-items: center;    gap: 8px; margin-top: 10px;">
+          <input type="text" name="search" placeholder="Rechercher..." value="{{ request('search') }}" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+          <button type="submit" class="btn-action btn-edit" title="Rechercher">
+              <i class="fas fa-search"></i>
+          </button>
+      </form>
+
     </div>
     <div class="styled-table">
       <table>
@@ -46,7 +54,6 @@
             <td>{{ $chantier->description_du_chantier }}</td>
             <td>{{ $chantier->domaine->description_fr ?? 'N/A' }}</td>
             <td>
-                <!-- Lien "Modifier" stylisé avec une icône -->
                 <a href="{{ route('chantier.edit', $chantier->id_chantier) }}" class="btn-action btn-edit" title="Modifier">
                     <i class="fas fa-edit"></i>
                 </a>

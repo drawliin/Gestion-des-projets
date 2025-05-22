@@ -11,9 +11,19 @@ class ProvinceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $provinces = Province::all();
+        $search = $request->input("search");
+
+        if($search){
+            $provinces = Province::where("code_province", "like", "%{$search}%")
+                ->orWhere("description_province_fr", "like", "%{$search}%")
+                ->orWhere("description_province_ar", "like", "%{$search}%")
+                ->get();
+        }else{
+            $provinces = Province::all();
+        }
+
         return view('province.index', compact('provinces'));
     }
 
