@@ -29,18 +29,7 @@ class LoginController extends Controller
             $user = Auth::user(); // Get logged in user
     
             // Role-based redirection
-            switch ($user->role) {
-                case 'admin':
-                    return redirect()->intended('/admin/dashboard');
-                case 'gestionnaire':
-                    return redirect()->intended('/gestionnaire/dashboard');
-                case 'responsable_financier':
-                    return redirect()->intended('/financier/dashboard');
-                case 'directeur':
-                    return redirect()->intended('/directeur/dashboard');
-                default:
-                    return redirect()->intended('/'); // fallback
-            }
+            return redirect()->route('province.index');
         }
     
         // Redirect back with error if login fails
@@ -48,4 +37,4 @@ class LoginController extends Controller
             'email' => 'Invalid credentials.',
         ])->withInput();
     }
-}    
+}
