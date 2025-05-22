@@ -14,9 +14,24 @@ class SousprojetController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->get();
+        $search = $request->input("search");
+
+        if($search){
+            $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->where("code_du_sous_projet", "like", "%{$search}%")
+                ->orWhere("nom_du_sous_projet", "like", "%{$search}%")
+                ->orWhere("estimation_initiale", "like", "%{$search}%")
+                ->orWhereHas('projet', function ($query) use ($search) {
+                    $query->where("nom_du_projet", "like", "%{$search}%");
+                })
+                ->orWhereHas('commune', function ($query) use ($search) {
+                    $query->where("nom_fr", "like", "%{$search}%");
+                })
+                ->get();
+        }else{
+            $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->get();
+        }
         return view('sousprojet.index', compact('sousProjets'));
     }
 
