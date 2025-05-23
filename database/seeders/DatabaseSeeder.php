@@ -12,6 +12,8 @@ use App\Models\Projet;
 use App\Models\SousProjetLocalise;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +23,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->count(10)->create();
+        Role::create(['name' => 'gestionnaire']);
+
+        $user = User::find(1);
+        $user->assignRole('gestionnaire');
 
         $domaines = [
             ['code_du_domaine' => 101, 'description_fr' => "Domaine de l'Éducation", 'description_ar' => 'مجال التعليم'],

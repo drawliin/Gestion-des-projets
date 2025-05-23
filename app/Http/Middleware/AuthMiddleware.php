@@ -15,7 +15,7 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check()){
+        if(!auth()->check() || !auth()->user()->hasRole('gestionnaire')){
             return redirect("/");
         }
         return $next($request);
