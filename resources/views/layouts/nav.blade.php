@@ -112,6 +112,13 @@
                 <i class="fas fa-puzzle-piece"></i> <span>Sous-Projets</span>
               </a>
             </li>
+            @role("admin")
+              <li class="nav-item">
+                <a href="{{ route('sousprojet.index') }}" class="nav-link">
+                  <i class="fa-solid fa-users"></i><span>Utilisateurs</span>
+                </a>
+              </li>
+            @endrole
           </ul>
         </nav>
       </div>

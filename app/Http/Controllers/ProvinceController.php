@@ -32,6 +32,9 @@ class ProvinceController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('gestionnare')){
+            return redirect()->route('province.index');
+        }
         return view('province.create');
 
     }

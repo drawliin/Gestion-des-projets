@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
-use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\AdminGestionnaireMiddleware;
 
 
 
@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'is.gestionnaire' => AuthMiddleware::class,
+            'is.AdminOrGestionnaire' => AdminGestionnaireMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
