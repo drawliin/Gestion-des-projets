@@ -23,10 +23,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->count(10)->create();
-        Role::create(['name' => 'gestionnaire']);
 
-        $user = User::find(1);
-        $user->assignRole('gestionnaire');
+        $roles = ['gestionnaire', 'admin'];
+        foreach($roles as $role){
+            Role::create(['name' => $role]);
+        }
+
+
+        ////////////// TEST CASE ONLY
+        $user1 = User::find(1);
+        $user1->assignRole('gestionnaire');
+        $user2 = User::find(2);
+        $user2->assignRole('admin');
+        /////////////////////////////
 
         $domaines = [
             ['code_du_domaine' => 101, 'description_fr' => "Domaine de l'Éducation", 'description_ar' => 'مجال التعليم'],

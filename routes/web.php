@@ -12,7 +12,7 @@ use App\Http\Controllers\SousprojetController;
 use App\Http\Controllers\LoginController;
 
 //'role:gestionnaire'
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth', 'is.gestionnaire'])->group(function (){
     Route::resource('province', ProvinceController::class);
     Route::resource('commune', CommuneController::class);
     Route::resource('domaine', DomaineController::class);

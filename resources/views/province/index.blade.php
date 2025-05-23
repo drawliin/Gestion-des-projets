@@ -4,11 +4,14 @@
 
 @section('content')
 <div class="form-container">
+
+    @role("gestionnaire")
     <div class="form-header">
         <div class="form-actions">
           <a href="{{ route('province.create') }}" class="btn-return">Ajouter province</a>
         </div>
-      </div>
+    </div>
+    @endrole
 
     <div class="form-content">
         <div class="form-title">
@@ -42,7 +45,9 @@
                     <th>Code</th>
                     <th>Description (FR)</th>
                     <th>Description (AR)</th>
+                    @role("gestionnaire")
                     <th>Actions</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -52,8 +57,8 @@
                     <td>{{ $province->code_province }}</td>
                     <td>{{ $province->description_province_fr }}</td>
                     <td>{{ $province->description_province_ar }}</td>
+                    @role("gestionnaire")
                     <td>
-                        <!-- Lien "Modifier" stylisé avec une icône -->
                         <a href="{{ route('province.edit', $province->id_province) }}" class="btn-action btn-edit" title="Modifier">
                             <i class="fas fa-edit"></i>
                         </a>
@@ -65,6 +70,7 @@
                             </button>
                         </form>
                     </td>
+                    @endrole
 
                 </tr>
                 @endforeach

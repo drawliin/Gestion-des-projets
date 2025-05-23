@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use App\Http\Middleware\AuthMiddleware;
+
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'is.gestionnaire' => AuthMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
