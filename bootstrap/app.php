@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'is.AdminOrGestionnaire' => AdminGestionnaireMiddleware::class,
+            'role' => RoleMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

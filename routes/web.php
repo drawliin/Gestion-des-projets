@@ -10,6 +10,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\ProgrammeController;
 use App\Http\Controllers\SousprojetController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 
 //'role:gestionnaire'
 Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
@@ -20,6 +21,10 @@ Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
     Route::resource('programme', ProgrammeController::class);
     Route::resource('projet', ProjetController::class);
     Route::resource('sousprojet', SousprojetController::class);
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function (){
+    Route::resource('users', UserController::class);
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
