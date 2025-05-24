@@ -16,6 +16,17 @@
       height: 100vh;
     }
 
+    .sidebar-header{
+      height: 7vh;
+    }
+    
+    .sidebar-nav{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 83vh;
+    }
+
     .sidebar-nav ul {
       list-style: none;
       padding: 0;
@@ -24,8 +35,6 @@
 
     /* Style pour les éléments de la barre latérale */
     .nav-item {
-        
-
       margin: 8px 0;         /* Espacement vertical */
       margin-right: 60px;    /* Espacement à droite */
     }
@@ -55,6 +64,7 @@
 
 
     .user-nav {
+      height: 10vh;
       padding: 12px;
       border-top: 1px solid #ccc;
     }
@@ -112,14 +122,16 @@
                 <i class="fas fa-puzzle-piece"></i> <span>Sous-Projets</span>
               </a>
             </li>
-            @role("admin")
+          </ul>
+          @role("admin")
+            <ul class="admin-ul">
               <li class="nav-item">
                 <a href="{{ route('sousprojet.index') }}" class="nav-link">
                   <i class="fa-solid fa-users"></i><span>Utilisateurs</span>
                 </a>
               </li>
-            @endrole
-          </ul>
+            </ul>
+          @endrole
         </nav>
       </div>
 
