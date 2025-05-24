@@ -12,7 +12,6 @@ use App\Http\Controllers\SousprojetController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 
-//'role:gestionnaire'
 Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
     Route::resource('province', ProvinceController::class);
     Route::resource('commune', CommuneController::class);

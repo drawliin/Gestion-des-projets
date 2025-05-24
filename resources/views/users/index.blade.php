@@ -34,8 +34,8 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-
         </div>
+
         <table class="styled-table">
             <thead>
                 <tr>
@@ -51,6 +51,9 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->roles->first()?->name }}</td>
                     <td>
+                        <a href="{{ route('users.edit', $user->id_utilisateur) }}" class="btn-action btn-edit" title="Modifier">
+                            <i class="fas fa-edit"></i>
+                        </a>
                         <form action="{{ route('users.destroy', $user->id_utilisateur) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
