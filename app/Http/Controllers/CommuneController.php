@@ -31,6 +31,9 @@ class CommuneController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('commune.index');
+        }
         return view('commune.create');
     }
 
@@ -67,6 +70,9 @@ class CommuneController extends Controller
      */
     public function edit(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('commune.index');
+        }
         $commune = Commune::findOrFail($id);
         return view('commune.edit', compact('commune'));
 
@@ -95,6 +101,10 @@ class CommuneController extends Controller
      */
     public function destroy(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('commune.index');
+        }
+        
         try {
             $commune = Commune::findOrFail($id);
             $commune->delete();

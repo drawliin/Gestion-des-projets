@@ -34,6 +34,9 @@ class ProgrammeController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('programme.index');
+        }
         $chantiers = Chantier::all();
         return view('programme.create', compact('chantiers'));
     }
@@ -67,6 +70,9 @@ class ProgrammeController extends Controller
      */
     public function edit(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('programme.index');
+        }
         $programme = Programme::findOrFail($id);
         $chantiers = Chantier::all();
         return view('programme.edit', compact('programme', 'chantiers'));
@@ -95,6 +101,10 @@ class ProgrammeController extends Controller
      */
     public function destroy(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('programme.index');
+        }
+        
         $programme = Programme::findOrFail($id);
         $programme->delete();
 

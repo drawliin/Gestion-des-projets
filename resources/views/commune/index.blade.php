@@ -4,11 +4,14 @@
 
 @section('content')
 <div class="form-container">
-  <div class="form-header">
-    <div class="form-actions">
-      <a href="{{ route('commune.create') }}" class="btn-return">Ajouter une commune</a>
+  
+  @role('gestionnaire')
+    <div class="form-header">
+      <div class="form-actions">
+        <a href="{{ route('commune.create') }}" class="btn-return">Ajouter une commune</a>
+      </div>
     </div>
-  </div>
+  @endrole
 
   <div class="form-content">
     <div class="form-title">
@@ -42,7 +45,9 @@
             <th>Code</th>
             <th>Nom (FR)</th>
             <th>Nom (AR)</th>
-            <th>Actions</th>
+            @role('gestionnaire')
+              <th>Actions</th>
+            @endrole
           </tr>
         </thead>
         <tbody>
@@ -52,21 +57,20 @@
             <td>{{ $commune->code_commune }}</td>
             <td>{{ $commune->nom_fr }}</td>
             <td>{{ $commune->nom_ar }}</td>
-            <td>
-                <!-- Lien "Modifier" stylisé avec une icône -->
-                <a href="{{ route('commune.edit', $commune->id_commune) }}" class="btn-action btn-edit" title="Modifier">
-                    <i class="fas fa-edit"></i>
-                </a>
-
-                <!-- Formulaire "Supprimer" stylisé avec une icône -->
-                <form action="{{ route('commune.destroy', $commune->id_commune) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-action btn-delete" onclick="return confirm('Supprimer cette commune ?')" title="Supprimer">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </form>
-            </td>
+            @role('gestionnaire')
+              <td>
+                  <a href="{{ route('commune.edit', $commune->id_commune) }}" class="btn-action btn-edit" title="Modifier">
+                      <i class="fas fa-edit"></i>
+                  </a>
+                  <form action="{{ route('commune.destroy', $commune->id_commune) }}" method="POST" style="display:inline;">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn-action btn-delete" onclick="return confirm('Supprimer cette commune ?')" title="Supprimer">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
+                  </form>
+              </td>
+            @endrole
 
         @endforeach
         </tbody>

@@ -4,12 +4,14 @@
 
 @section('content')
 <div class="form-container">
-    <div class="form-header">
 
+  @role('gestionnaire')
+    <div class="form-header">
         <div class="form-actions">
           <a href="{{ route('chantier.create') }}" class="btn-return">Ajouter un chantier</a>
         </div>
-      </div>
+    </div>
+  @endrole
 
   <div class="form-content">
     <div class="form-title">
@@ -43,7 +45,9 @@
             <th>Code</th>
             <th>Description</th>
             <th>Domaine</th>
-            <th>Actions</th>
+            @role('gestionnaire')
+              <th>Actions</th>
+            @endrole
           </tr>
         </thead>
         <tbody>
@@ -53,18 +57,20 @@
             <td>{{ $chantier->code_du_chantier }}</td>
             <td>{{ $chantier->description_du_chantier }}</td>
             <td>{{ $chantier->domaine->description_fr ?? 'N/A' }}</td>
-            <td>
-                <a href="{{ route('chantier.edit', $chantier->id_chantier) }}" class="btn-action btn-edit" title="Modifier">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <form action="{{ route('chantier.destroy', $chantier->id_chantier) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-action btn-delete" onclick="return confirm('Supprimer ce chantier ?')" title="Supprimer">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </form>
-            </td>
+            @role('gestionnaire')
+              <td>
+                  <a href="{{ route('chantier.edit', $chantier->id_chantier) }}" class="btn-action btn-edit" title="Modifier">
+                      <i class="fas fa-edit"></i>
+                  </a>
+                  <form action="{{ route('chantier.destroy', $chantier->id_chantier) }}" method="POST" style="display:inline;">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn-action btn-delete" onclick="return confirm('Supprimer ce chantier ?')" title="Supprimer">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
+                  </form>
+              </td>
+            @endrole
           </tr>
         @endforeach
         </tbody>

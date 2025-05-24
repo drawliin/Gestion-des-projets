@@ -4,11 +4,14 @@
 
 @section('content')
 <div class="form-container">
-    <div class="form-header">
-        <div class="form-actions">
-            <a href="{{ route('sousprojet.create') }}" class="btn-return">Ajouter Sous-Projet</a>
+
+    @role('gestionnaire')
+        <div class="form-header">
+            <div class="form-actions">
+                <a href="{{ route('sousprojet.create') }}" class="btn-return">Ajouter Sous-Projet</a>
+            </div>
         </div>
-    </div>
+    @endrole
 
     <div class="form-content">
         <div class="form-title">
@@ -57,16 +60,18 @@
                         <a href="{{ route('sousprojet.show', $sousprojet->code_du_sous_projet) }}" class="btn-action btn-view" title="Voir détails">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('sousprojet.edit', $sousprojet->code_du_sous_projet) }}" class="btn-action btn-edit" title="Modifier">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <form action="{{ route('sousprojet.destroy', $sousprojet->code_du_sous_projet) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-action btn-delete" title="Supprimer" onclick="return confirm('Supprimer ce sous-projet ?')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
+                        @role('gestionnaire')
+                            <a href="{{ route('sousprojet.edit', $sousprojet->code_du_sous_projet) }}" class="btn-action btn-edit" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="{{ route('sousprojet.destroy', $sousprojet->code_du_sous_projet) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-action btn-delete" title="Supprimer" onclick="return confirm('Supprimer ce sous-projet ?')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        @endrole
                     </td>
 
                 </tr>

@@ -73,6 +73,9 @@ class ProvinceController extends Controller
      */
     public function edit(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('province.index');
+        }
         $province = Province::findOrFail($id);
         return view('province.edit', compact('province'));
     }
@@ -103,6 +106,9 @@ class ProvinceController extends Controller
      */
     public function destroy(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('province.index');
+        }
         try{
         $province = Province::findOrFail($id);
         $province->delete();

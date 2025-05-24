@@ -34,6 +34,9 @@ class DomaineController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('domaine.index');
+        }
         return view('domaine.create');
     }
 
@@ -65,6 +68,9 @@ class DomaineController extends Controller
      */
     public function edit(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('domaine.index');
+        }
         $domaine = Domaine::findOrFail($id);
         return view('domaine.edit', compact('domaine'));
     }
@@ -93,18 +99,24 @@ class DomaineController extends Controller
      */
     public function destroy(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('domaine.index');
+        }
+        
         try{
-        $domaine = Domaine::findOrFail($id);
-        $domaine->delete();
+            $domaine = Domaine::findOrFail($id);
+            $domaine->delete();
 
-        return redirect()->route('domaine.index')->with('success', 'Domaine supprimé avec succès.');
-    } catch (QueryException $e) {
-        if ($e->getCode() == '23000') {
-            return redirect()->route('domaine.index')
-                ->with('error', 'Impossible de supprimer le domaine : il est lié à un ou plusieurs chantiers ou projets.');
+            return redirect()->route('domaine.index')->with('success', 'Domaine supprimé avec succès.');
+        
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return redirect()->route('domaine.index')
+                    ->with('error', 'Impossible de supprimer le domaine : il est lié à un ou plusieurs chantiers ou projets.');
         }
 
         return redirect()->route('domaine.index')
             ->with('error', 'Une erreur est survenue lors de la suppression.');
+        }
     }
-}}
+}

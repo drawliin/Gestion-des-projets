@@ -35,6 +35,9 @@ class ChantierController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('chantier.index');
+        }
         $domaines = Domaine::all();
         return view('chantier.create', compact('domaines'));
     }
@@ -72,6 +75,9 @@ class ChantierController extends Controller
      */
     public function edit(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('chantier.index');
+        }
         $chantier = Chantier::findOrFail($id);
         $domaines = Domaine::all();
         return view('chantier.edit', compact('chantier', 'domaines'));
@@ -104,19 +110,22 @@ class ChantierController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-        $chantier = Chantier::findOrFail($id);
-        $chantier->delete();
-
-        return redirect()->route('chantier.index')->with('success', 'Chantier supprimé avec succès.');
-    } catch (QueryException $e) {
-        if ($e->getCode() == '23000') {
-            return redirect()->route('chantier.index')
-                ->with('error', 'Impossible de supprimer le chantier : il est lié à un ou plusieurs sous-projets ou autres entités.');
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return redirect()->route('chantier.index');
         }
+        try {
+            $chantier = Chantier::findOrFail($id);
+            $chantier->delete();
 
-        return redirect()->route('chantier.index')
+            return redirect()->route('chantier.index')->with('success', 'Chantier supprimé avec succès.');
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return redirect()->route('chantier.index')
+                    ->with('error', 'Impossible de supprimer le chantier : il est lié à un ou plusieurs sous-projets ou autres entités.');
+            }
+
+            return redirect()->route('chantier.index')
             ->with('error', 'Une erreur est survenue lors de la suppression.');
-    }
+        }
     }
 }
