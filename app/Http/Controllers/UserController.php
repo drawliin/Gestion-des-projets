@@ -23,7 +23,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("users.create");
+        $roles = Role::all();
+        return view("users.create", compact('roles'));
     }
 
     /**
@@ -31,7 +32,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'role'=> 'required|exists:roles,name'
+        ]);
+
+        $user = User::create([
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+        $user->assignRole($request->role);
+
+        return redirect()->route('users.index')->with('success', 'User Added Successfuly');
     }
 
     /**
