@@ -68,6 +68,50 @@
       padding: 12px;
       border-top: 1px solid #ccc;
     }
+    .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 24px;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .date-role-badge {
+        font-size: 14px;
+        color: #444;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 6px 12px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .right-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .profile-icon {
+        width: 40px;
+        height: 40px;
+        background-color: #333;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+    .profile-icon:hover {
+        background-color: #555;
+    }
   </style>
 
 </head>
@@ -122,16 +166,13 @@
                 <i class="fas fa-puzzle-piece"></i> <span>Sous-Projets</span>
               </a>
             </li>
-            <li class="nav-item">
-                <a href="/dashboard" class="nav-link">
-                <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
-                </a>
-                </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fa-solid fa-user"></i> <span>Mon Compte</span>
-                </a>
-            </li>
+            @role("directeur")
+              <li class="nav-item">
+                  <a href="/dashboard" class="nav-link">
+                    <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+                  </a>
+              </li>
+            @endrole
           </ul>
           @role("admin")
             <ul class="admin-ul">
@@ -145,23 +186,29 @@
         </nav>
       </div>
 
-      <!-- Utilisateur en bas -->
-      <div class="user-nav">
-        <ul>
-          <li class="nav-item">
-            <form action="{{route("logout")}}" method="Post">
-              @csrf
-              <button type="submit" class="btn-logout">
-                <i class="fa-solid fa-right-from-bracket"></i> <span>Log out</span>
-              </button>
-            </form>
-          </li>
-        </ul>
-      </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
+      <header class="main-header">
+          <span class="date-role-badge">
+              📅 {{ \Carbon\Carbon::now()->locale('fr')->isoFormat('ddd D MMMM YYYY') }} |
+              👤 Rôle : <strong>{{ ucfirst(auth()->user()->roles->first()?->name) }}</strong>
+          </span>
+
+          <div class="right-header">
+              <a href="" class="profile-icon" title="Mon Profil">
+                  {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+              </a>
+
+              <form action="{{ route('logout') }}" method="POST">
+                  @csrf
+                  <button type="submit" class="btn-logout" title="Se déconnecter">
+                      <i class="fa-solid fa-right-from-bracket"></i>
+                  </button>
+              </form>
+          </div>
+      </header>
       @yield('content')
     </div>
   </div>
