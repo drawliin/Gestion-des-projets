@@ -8,6 +8,7 @@
         <h2>CRÉER UN NOUVEAU</h2>
         <h1>Sous-Projet</h1>
       </div>
+      
       <form method="POST" action="{{ route('sousprojet.store') }}">
         @csrf
         <div class="form-row">

@@ -7,6 +7,7 @@ use App\Models\Commune;
 use App\Models\Province;
 use App\Models\Programme;
 use Illuminate\Http\Request;
+use App\Models\SousProjetLocalise;
 use Illuminate\Database\QueryException;
 
 class ProjetController extends Controller
@@ -29,7 +30,7 @@ class ProjetController extends Controller
         }else{
             $projets = Projet::with(['programme', 'province', 'commune'])->get();
         }
-        
+
         return view('projet.index', compact('projets'));
     }
 
@@ -129,4 +130,28 @@ class ProjetController extends Controller
             ->with('error', 'Une erreur est survenue lors de la suppression.');
         }
     }
+    public function dashboard()
+{
+    $total = Projet::count();
+    $totalSousProjets = SousProjetLocalise::count();
+
+    $avgPhysique = Projet::avg('etat_d_avancement_physique') ?? 0;
+    $avgFinancier = Projet::avg('etat_d_avancement_financier') ?? 0;
+
+    $nonCommences = Projet::where('etat_d_avancement_physique', 0)->count();
+    $enCours = Projet::where('etat_d_avancement_physique', '>', 0)
+                     ->where('etat_d_avancement_physique', '<', 100)
+                     ->count();
+    $termines = Projet::where('etat_d_avancement_physique', 100)->count();
+
+    $projets = Projet::with(['province', 'commune'])->get();
+    $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->get();
+
+    return view('directeur.dashboard', compact(
+        'total', 'totalSousProjets', 'avgPhysique', 'avgFinancier',
+        'nonCommences', 'enCours', 'termines', 'projets', 'sousProjets'
+    ));
+}
+
+
 }

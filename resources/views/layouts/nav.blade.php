@@ -21,7 +21,7 @@
     .sidebar-header{
       height: 7vh;
     }
-    
+
     .sidebar-nav{
       display: flex;
       flex-direction: column;
@@ -69,7 +69,7 @@
       border-top: 1px solid #ccc;
     }
   </style>
-  
+
 </head>
 <body>
   <div class="app-container">
@@ -121,6 +121,16 @@
               <a href="{{ route('sousprojet.index') }}" class="nav-link">
                 <i class="fas fa-puzzle-piece"></i> <span>Sous-Projets</span>
               </a>
+            </li>
+            <li class="nav-item">
+                <a href="/dashboard" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+                </a>
+                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="fa-solid fa-user"></i> <span>Mon Compte</span>
+                </a>
             </li>
           </ul>
           @role("admin")
