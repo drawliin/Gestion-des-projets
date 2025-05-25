@@ -25,6 +25,17 @@
         <h2>CRÉER UN NOUVEAU</h2>
         <h1>Projet</h1>
       </div>
+      <div class="chart-section" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+  <div style="flex: 1; min-width: 300px;">
+    <h3>Avancement Physique des Projets</h3>
+    <canvas id="chartPhysique"></canvas>
+  </div>
+  <div style="flex: 1; min-width: 300px;">
+    <h3>Avancement Financier des Projets</h3>
+    <canvas id="chartFinancier"></canvas>
+  </div>
+</div>
+
       <form id="projectForm" method="POST" action="{{ route('projet.store') }}">
         @csrf
         <h3>Détails du Projet</h3>
@@ -129,4 +140,5 @@
     </div>
   </div>
 </div>
+
 @endsection

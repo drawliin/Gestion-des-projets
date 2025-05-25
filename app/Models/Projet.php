@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Projet extends Model
 {
@@ -37,7 +38,7 @@ class Projet extends Model
         return $this->belongsTo(Commune::class, 'id_commune');
     }
 
-    public function programme()
+    public function programme(): BelongsTo
     {
         return $this->belongsTo(Programme::class, 'id_programme');
     }
