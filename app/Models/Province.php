@@ -18,6 +18,10 @@ class Province extends Model
         'description_province_ar',
     ];
 
+    public function communes()
+    {
+        return $this->hasMany(Commune::class, 'id_province');
+    }
     public function sousProjetsLocalises()
     {
         return $this->hasMany(SousProjetLocalise::class, 'id_province');

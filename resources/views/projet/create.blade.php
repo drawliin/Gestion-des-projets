@@ -7,34 +7,21 @@
 <!-- Main Content -->
 <div class="main-content">
   <div class="form-container">
-    <div class="form-header">
-    </div>
     <div class="form-content">
       <div class="form-title">
+          @if ($errors->any())
+            <div class="alert-error">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
 
-        @if ($errors->any())
-  <div class="alert-error">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
-
-        <h2>CRÉER UN NOUVEAU</h2>
-        <h1>Projet</h1>
+          <h2>CRÉER UN NOUVEAU</h2>
+          <h1>Projet</h1>
       </div>
-      <div class="chart-section" style="display: flex; flex-wrap: wrap; gap: 2rem;">
-  <div style="flex: 1; min-width: 300px;">
-    <h3>Avancement Physique des Projets</h3>
-    <canvas id="chartPhysique"></canvas>
-  </div>
-  <div style="flex: 1; min-width: 300px;">
-    <h3>Avancement Financier des Projets</h3>
-    <canvas id="chartFinancier"></canvas>
-  </div>
-</div>
 
       <form id="projectForm" method="POST" action="{{ route('projet.store') }}">
         @csrf

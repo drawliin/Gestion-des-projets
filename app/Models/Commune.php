@@ -25,4 +25,8 @@ class Commune extends Model
     {
         return $this->hasMany(SousProjetLocalise::class, 'id_commune');
     }
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'id_province');
+    }
 }
