@@ -24,16 +24,14 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->count(10)->create();
 
-        $roles = ['gestionnaire', 'admin'];
+        $roles = ['gestionnaire', 'admin', 'directeur', 'financier'];
         foreach($roles as $role){
             Role::create(['name' => $role]);
         }
 
 
         ////////////// TEST CASE ONLY
-        $user1 = User::find(1);
-        $user1->assignRole('gestionnaire');
-        $user2 = User::find(2);
+        $user2 = User::find(1);
         $user2->assignRole('admin');
         /////////////////////////////
 
