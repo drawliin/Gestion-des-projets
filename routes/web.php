@@ -13,6 +13,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProgrammeController;
 use App\Http\Controllers\SousprojetController;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
     Route::resource('province', ProvinceController::class);
@@ -43,4 +44,4 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashb
 Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projets.show');
 Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
 
-
+Route::resource("profile", ProfileController::class);

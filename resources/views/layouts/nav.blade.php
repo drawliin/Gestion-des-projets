@@ -197,7 +197,7 @@
           </span>
 
           <div class="right-header">
-              <a href="" class="profile-icon" title="Mon Profil">
+              <a href="{{route("profile.index")}}" class="profile-icon" title="Mon Profil">
                   {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
               </a>
 
