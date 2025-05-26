@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProgrammeController;
 use App\Http\Controllers\SousprojetController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CoutProjetController;
 
 Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
     Route::resource('province', ProvinceController::class);
@@ -45,3 +46,6 @@ Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projet
 Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
 
 Route::resource("profile", ProfileController::class);
+
+Route::resource("couts", CoutProjetController::class);
+Route::get('/financiere/couts/export', [CoutProjetController::class, 'export'])->name('financiere.couts.export');

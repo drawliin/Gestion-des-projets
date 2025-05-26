@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="{{ asset('css/project.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
 
 
   <style>
@@ -176,11 +176,14 @@
           </ul>
           @role("admin")
             <ul class="admin-ul">
-              <li class="nav-item">
-                <a href="{{ route('users.index') }}" class="nav-link">
-                  <i class="fa-solid fa-users"></i><span>Utilisateurs</span>
-                </a>
-              </li>
+              <ul class="nav-item">
+  <!-- Ligne de séparation proche de l'item -->
+  <li style="border-top: 1px solid #ccc; margin-top: 0.5rem; padding-top: 0.5rem; margin-bottom: 0px;">
+    <a href="{{ route('users.index') }}" class="nav-link">
+      <i class="fa-solid fa-users"></i><span>Utilisateurs</span>
+    </a>
+  </li>
+</ul>
             </ul>
           @endrole
         </nav>
