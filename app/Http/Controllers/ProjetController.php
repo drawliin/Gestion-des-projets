@@ -52,12 +52,9 @@ class ProjetController extends Controller
         $request->validate([
             'code_du_projet' => 'required|unique:projets,code_du_projet',
             'nom_du_projet' => 'required|string',
-            'cout_cro' => 'required|numeric',
-            'cout_total_du_projet' => 'required|numeric',
-            'annee_debut' => 'required|date',
-            'annee_fin_prevue' => 'required|date|after_or_equal:annee_debut',
+            'annee_debut' => 'required|integer|min:2015|max:2045',
+            'annee_fin_prevue' => 'required|integer|after_or_equal:annee_debut|min:2015|max:2045',
             'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
-            'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
             'commentaires' => 'nullable|string',
             'id_province' => 'required|exists:provinces,id_province',
             'id_commune' => 'required|exists:communes,id_commune',
@@ -130,28 +127,29 @@ class ProjetController extends Controller
             ->with('error', 'Une erreur est survenue lors de la suppression.');
         }
     }
+    
     public function dashboard()
-{
-    $total = Projet::count();
-    $totalSousProjets = SousProjetLocalise::count();
+    {
+        $total = Projet::count();
+        $totalSousProjets = SousProjetLocalise::count();
 
-    $avgPhysique = Projet::avg('etat_d_avancement_physique') ?? 0;
-    $avgFinancier = Projet::avg('etat_d_avancement_financier') ?? 0;
+        $avgPhysique = Projet::avg('etat_d_avancement_physique') ?? 0;
+        $avgFinancier = Projet::avg('etat_d_avancement_financier') ?? 0;
 
-    $nonCommences = Projet::where('etat_d_avancement_physique', 0)->count();
-    $enCours = Projet::where('etat_d_avancement_physique', '>', 0)
-                     ->where('etat_d_avancement_physique', '<', 100)
-                     ->count();
-    $termines = Projet::where('etat_d_avancement_physique', 100)->count();
+        $nonCommences = Projet::where('etat_d_avancement_physique', 0)->count();
+        $enCours = Projet::where('etat_d_avancement_physique', '>', 0)
+                        ->where('etat_d_avancement_physique', '<', 100)
+                        ->count();
+        $termines = Projet::where('etat_d_avancement_physique', 100)->count();
 
-    $projets = Projet::with(['province', 'commune'])->get();
-    $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->get();
+        $projets = Projet::with(['province', 'commune'])->get();
+        $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->get();
 
-    return view('directeur.dashboard', compact(
-        'total', 'totalSousProjets', 'avgPhysique', 'avgFinancier',
-        'nonCommences', 'enCours', 'termines', 'projets', 'sousProjets'
-    ));
-}
+        return view('directeur.dashboard', compact(
+            'total', 'totalSousProjets', 'avgPhysique', 'avgFinancier',
+            'nonCommences', 'enCours', 'termines', 'projets', 'sousProjets'
+        ));
+    }
 
 
 }

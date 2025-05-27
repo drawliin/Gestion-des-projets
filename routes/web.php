@@ -37,17 +37,20 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-Route::get('/dashboard', [ProjetController::class, 'dashboard'])->name('dashboard');
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projets.show');
-Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
+Route::middleware(['role:directeur'])->group(function(){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [ProjetController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projets.show');
+    Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
+});
 
 Route::middleware(['auth'])->group(function (){
     Route::get("profile", [ProfileController::class, "index"])->name("profile.index");
     Route::put("profile", [ProfileController::class, "update"])->name("profile.update");
 });
 
-Route::resource("couts", CoutProjetController::class);
-Route::get('/financiere/couts/export', [CoutProjetController::class, 'export'])->name('financiere.couts.export');
+Route::middleware(['role:financier'])->group(function(){
+    Route::resource("couts", CoutProjetController::class);
+    Route::get('/financiere/couts/export', [CoutProjetController::class, 'export'])->name('financiere.couts.export');
+});

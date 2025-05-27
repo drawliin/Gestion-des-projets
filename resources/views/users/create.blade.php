@@ -25,19 +25,31 @@
         
             <div class="form-row">
                 <div class="form-group">
-                    <label for="email">Email <span class="required">*</span></label>
-                    <input type="email" name="email" value="{{old('email')}}">
+                    <label for="nom">Nom</label>
+                    <input type="text" name="nom" value="{{old('nom')}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prenom</label>
+                    <input type="text" name="prenom" value="{{old('prenom')}}" required>
                 </div>
             </div>
+
             <div class="form-row">
                 <div class="form-group">
-                    <label for="password">Password <span class="required">*</span></label>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" value="{{old('email')}}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
                     <input type="password" name="password" required/>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label for="role">Role <span class="required">*</span></label>
+                    <label for="role">Role</label>
                     <select name="role">
                         <option value="">Sélectionner un role</option>
                         @foreach($roles as $role)

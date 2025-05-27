@@ -13,7 +13,12 @@
       <form method="POST" action="{{ route('login') }}">
         @csrf
         @method("post")
-        <input type="text" name="email" placeholder="Email" required>
+        @if($errors->any())
+          @foreach($errors->all() as $err)
+            <div style="color: red;">{{$err}}</div>
+          @endforeach
+        @endif
+        <input type="email" value="{{old("email")}}" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>
       </form>

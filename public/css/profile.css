@@ -31,12 +31,15 @@
     margin-top: -4px;
 }
 
-.info-section, .password-section {
+.info-section, .form-section {
     margin-bottom: 30px;
+}
+.form-section{
+    width: 60%;
 }
 
 .info-section h2,
-.password-section h2 {
+.form-section h2 {
     font-size: 20px;
     color: #333;
     margin-bottom: 15px;
@@ -52,15 +55,15 @@
     color: #555;
 }
 
-.password-section label {
+.form-section label {
     display: block;
     margin: 10px 0 5px;
     font-weight: 500;
     color: #444;
 }
 
-.password-section input {
-    width: 50%;
+.form-section input {
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -69,12 +72,12 @@
     transition: border-color 0.2s;
 }
 
-.password-section input:focus {
+.form-section input:focus {
     border-color: #3b82f6;
     outline: none;
 }
 
-.password-section button {
+.form-section button {
     display: block;
     background-color: #3b82f6;
     color: white;
@@ -86,6 +89,6 @@
     transition: background 0.3s ease;
 }
 
-.password-section button:hover {
+.form-section button:hover {
     background-color: #2563eb;
 }

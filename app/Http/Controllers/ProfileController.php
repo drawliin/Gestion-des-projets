@@ -54,25 +54,28 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
-            "current_password" => "required",
-            "new_password" => "required|min:8|confirmed"
+            "nom" => "required|string|max:255",
+            "prenom" => "required|string|max:255",
+            "current_password" => "nullable|required_with:new_password|string",
+            "new_password" => "nullable|string|min:8|confirmed"
         ],[
-            "current_password.required" => "Veuillez saisir votre mot de passe actuel",
             "new_password.min" => "Le mot de passe doit contenir au moins 8 caractères",
             "new_password.confirmed" => "Les mots de passe ne correspondent pas"
         ]);
 
         $user = auth()->user();
+        $toUpdate = $request->only(["nom", "prenom"]);
 
-        if(!Hash::check($validated['current_password'], $user->password)){
-            return back()->withErrors(['current_password' => 'Mot de passe actuel incorrect']);
+        if($request->filled("new_password")){
+            if(!Hash::check($validated['current_password'], $user->password)){
+                return back()->withErrors(['current_password' => 'Mot de passe actuel incorrect']);
+            }
+            $toUpdate['password'] = Hash::make($validated['new_password']); 
         }
+        
+        $user->update($toUpdate);
 
-        $user->update([
-            'password' => Hash::make($validated['new_password'])
-        ]);
-
-        return back()->with('success', 'Mot de passe mis à jour avec succès.');
+        return redirect()->route("profile.index")->with('success', 'Données mis à jour avec succès.');
 
     }
 

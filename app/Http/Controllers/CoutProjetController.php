@@ -17,15 +17,15 @@ class CoutProjetController extends Controller
     {
         $query = SousProjetLocalise::with('projet');
 
-    if ($request->filled('id_projet')) {
-    $query->where('id_projet', $request->id_projet);
-    }
+        if ($request->filled('id_projet')) {
+            $query->where('id_projet', $request->id_projet);
+        }
 
-    $sousProjets = $query->paginate(5); // 10 items par page
+        $sousProjets = $query->paginate(5); // 10 items par page
 
-    $projets = Projet::all();
+        $projets = Projet::all();
 
-    return view('financiere.index', compact('sousProjets', 'projets'));
+        return view('financiere.index', compact('sousProjets', 'projets'));
     }
 
     /**
@@ -33,10 +33,10 @@ class CoutProjetController extends Controller
      */
     public function create()
     {
-         $projets = Projet::all();
-            $sous_projets = SousProjetLocalise::all();
+        $projets = Projet::all();
+        $sous_projets = SousProjetLocalise::all();
 
-    return view('financiere.create', compact('projets', 'sous_projets'));
+        return view('financiere.create', compact('projets', 'sous_projets'));
     }
 
     /**

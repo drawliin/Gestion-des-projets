@@ -16,25 +16,28 @@ class LoginController extends Controller
     // Handle login logic
     public function login(Request $request)
     {
-        // Validate input
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
     
-        // Attempt to log the user in
         $credentials = $request->only('email', 'password');
     
         if (Auth::attempt($credentials)) {
-            $user = Auth::user(); // Get logged in user
-    
-            // Role-based redirection
+            $user = Auth::user(); 
+
+            if($user->hasRole("directeur")){
+                return redirect()->route("dashboard");
+            }
+            if($user->hasRole("financier")){
+                return redirect()->route("couts.index");
+            }
+
             return redirect()->route('province.index');
         }
     
-        // Redirect back with error if login fails
         return back()->withErrors([
-            'email' => 'Invalid credentials.',
+            'email' => 'Invalid credentials',
         ])->withInput();
     }
 }

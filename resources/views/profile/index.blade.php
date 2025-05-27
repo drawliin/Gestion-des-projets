@@ -3,7 +3,6 @@
 @section('title', 'Profile')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 
 <div class="profile-wrapper">
     <div class="profile-header">
@@ -28,7 +27,7 @@
 
             <h2>Informations Personnelles</h2>
             <ul>
-                <li><strong>Nom:</strong> {{ $user->nom }}</li>
+                <li><strong>Nom Complet:</strong> {{ $user->nom }} {{$user->prenom}}</li>
                 <li><strong>Email:</strong> {{ $user->email }}</li>
                 @if($user->telephone)
                     <li><strong>Téléphone:</strong> {{ $user->telephone }}</li>
@@ -38,20 +37,30 @@
             </ul>
         </section>
 
-        <section class="password-section">
-            <h2>🔒 Changer le mot de passe</h2>
+        <section class="form-section">
             <form action="{{route('profile.update')}}" method="POST">
                 @csrf
                 @method('PUT')
 
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" value="{{$user->nom}}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" id="prenom" name="prenom" value="{{$user->prenom}}" required>
+                    </div>
+                </div>
+                
                 <label for="current_password">Mot de passe actuel</label>
-                <input type="password" id="current_password" name="current_password" required>
+                <input type="password" id="current_password" name="current_password">
 
                 <label for="new_password">Nouveau mot de passe</label>
-                <input type="password" id="new_password" name="new_password" required>
+                <input type="password" id="new_password" name="new_password">
 
                 <label for="new_password_confirmation">Confirmer le nouveau mot de passe</label>
-                <input type="password" id="new_password_confirmation" name="new_password_confirmation" required>
+                <input type="password" id="new_password_confirmation" name="new_password_confirmation">
 
                 <button type="submit">Mettre à jour</button>
             </form>
