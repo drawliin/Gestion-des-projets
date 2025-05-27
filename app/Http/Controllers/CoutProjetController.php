@@ -45,9 +45,9 @@ class CoutProjetController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-        'sous_projet_id' => 'required|exists:sous_projets_localises,code_du_sous_projet',
-        'estimation_initiale' => 'required|numeric|min:0',
-        'avancement_financier' => 'required|numeric|min:0|max:100',
+            'sous_projet_id' => 'required|exists:sous_projets_localises,code_du_sous_projet',
+            'estimation_initiale' => 'required|numeric|min:0',
+            'avancement_financier' => 'required|numeric|min:0|max:100',
     ]);
 
     // Récupérer le sous projet par son code

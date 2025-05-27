@@ -9,11 +9,11 @@ use Illuminate\Database\QueryException;
 
 class ChantierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-    */
     public function index(Request $request)
     {
+        if(!auth()->user()->hasRole('gestionnaire') && !auth()->user()->hasRole('admin')){
+            return abort(403);
+        }
 
         $search = $request->input("search");
 

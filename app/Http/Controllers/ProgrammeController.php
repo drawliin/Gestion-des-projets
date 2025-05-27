@@ -13,6 +13,10 @@ class ProgrammeController extends Controller
      */
     public function index(Request $request)
     {
+        if(!auth()->user()->hasRole('gestionnaire') && !auth()->user()->hasRole('admin')){
+            return abort(403);
+        }
+        
         $search = $request->input("search");
 
         if($search){

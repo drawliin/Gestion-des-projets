@@ -12,17 +12,20 @@ class CommuneController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
+    {   
+        if(!auth()->user()->hasRole('gestionnaire') && !auth()->user()->hasRole('admin')){
+            return abort(403);
+        }
         $search = $request->input('search');
 
-    if ($search) {
-        $communes = Commune::where('nom_fr', 'like', "%{$search}%")
-            ->orWhere('nom_ar', 'like', "%{$search}%")
-            ->orWhere('code_commune', 'like', "%{$search}%")
-            ->get();
-    } else {
-        $communes = Commune::all();
-    }
+        if ($search) {
+            $communes = Commune::where('nom_fr', 'like', "%{$search}%")
+                ->orWhere('nom_ar', 'like', "%{$search}%")
+                ->orWhere('code_commune', 'like', "%{$search}%")
+                ->get();
+        } else {
+            $communes = Commune::all();
+        }
         return view('commune.index', compact('communes'));
     }
 

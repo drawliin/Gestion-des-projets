@@ -41,7 +41,9 @@ Route::middleware(['role:directeur'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [ProjetController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/projets', [ProjetController::class, 'index'])->name('projets.index');
     Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projets.show');
+    Route::get('/sous-projets', [SousProjetController::class, 'index'])->name('sous-projets.index');
     Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
 });
 

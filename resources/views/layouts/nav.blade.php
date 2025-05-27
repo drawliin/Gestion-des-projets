@@ -132,14 +132,17 @@
 
         <nav class="sidebar-nav">
           <ul>
+            @hasanyrole("admin|gestionnaire")
             <li class="nav-item">
               <a href="{{ route('commune.index') }}" class="nav-link">
-                <i class="fas fa-city"></i> <span>Communes</span>
+                <i class="fas fa-city"></i> 
+                <span>Communes</span>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('province.index') }}" class="nav-link">
-                <i class="fas fa-map"></i> <span>Provinces</span>
+                <i class="fas fa-map"></i> 
+                <span>Provinces</span>
               </a>
             </li>
             <li class="nav-item">
@@ -157,6 +160,7 @@
                 <i class="fas fa-tasks"></i> <span>Programmes</span>
               </a>
             </li>
+            @endhasanyrole
             <li class="nav-item">
               <a href="{{ route('projet.index') }}" class="nav-link">
                 <i class="fas fa-project-diagram"></i> <span>Projets</span>
