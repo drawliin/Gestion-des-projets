@@ -4,6 +4,6 @@
 
 @section('content')
 <div class="form-container">
-    <h1>Profile</h1>
+    <h1>Id: {{$user}}</h1>
 </div>
 @endsection

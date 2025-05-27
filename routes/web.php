@@ -32,7 +32,6 @@ Route::middleware(['auth', 'role:admin'])->group(function (){
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login']);
-
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
@@ -45,7 +44,9 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashb
 Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projets.show');
 Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
 
-Route::resource("profile", ProfileController::class);
+Route::middleware(['auth'])->group(function (){
+    Route::resource("profile", ProfileController::class);
+});
 
 Route::resource("couts", CoutProjetController::class);
 Route::get('/financiere/couts/export', [CoutProjetController::class, 'export'])->name('financiere.couts.export');

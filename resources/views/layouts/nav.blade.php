@@ -175,16 +175,13 @@
             @endrole
           </ul>
           @role("admin")
-            <ul class="admin-ul">
               <ul class="nav-item">
-  <!-- Ligne de séparation proche de l'item -->
-  <li style="border-top: 1px solid #ccc; margin-top: 0.5rem; padding-top: 0.5rem; margin-bottom: 0px;">
-    <a href="{{ route('users.index') }}" class="nav-link">
-      <i class="fa-solid fa-users"></i><span>Utilisateurs</span>
-    </a>
-  </li>
-</ul>
-            </ul>
+                <li style="border-top: 1px solid #ccc; margin-top: 0.5rem; padding-top: 0.5rem; margin-bottom: 0px;">
+                  <a href="{{ route('users.index') }}" class="nav-link">
+                    <i class="fa-solid fa-users"></i><span>Utilisateurs</span>
+                  </a>
+                </li>
+              </ul>
           @endrole
         </nav>
       </div>
