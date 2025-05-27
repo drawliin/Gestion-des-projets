@@ -45,7 +45,8 @@ Route::get('/projets/{projet}', [ProjetController::class, 'show'])->name('projet
 Route::get('/sous-projets/{sousProjet}', [SousProjetController::class, 'show'])->name('sous-projets.show');
 
 Route::middleware(['auth'])->group(function (){
-    Route::resource("profile", ProfileController::class);
+    Route::get("profile", [ProfileController::class, "index"])->name("profile.index");
+    Route::put("profile", [ProfileController::class, "update"])->name("profile.update");
 });
 
 Route::resource("couts", CoutProjetController::class);

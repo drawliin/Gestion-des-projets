@@ -56,7 +56,7 @@
             </div>
 
             <div class="form-actions-top">
-            <button type="submit" class="btn-return">Mettre à jour la province</button>
+            <button type="submit" class="btn-return">Mettre à jour User</button>
             </div>
         </form>
     </div>
