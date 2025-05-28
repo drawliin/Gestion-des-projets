@@ -49,7 +49,12 @@
             <th>Province</th>
             <th>Commune</th>
             <th>Année Début</th>
+            @role("gestionnaire")
             <th>Actions</th>
+            @endrole
+            @hasanyrole("admin|financier|directeur")
+            <th>Details</th>
+            @endhasanyrole
           </tr>
         </thead>
         <tbody>
@@ -58,7 +63,7 @@
               <td>{{ $projet->code_du_projet }}</td>
               <td>{{ $projet->nom_du_projet }}</td>
               <td>{{ $projet->province->description_province_fr ?? ''}}</td>
-              <td>{{ $projet->commune->nom_fr ?? ''}}</td>
+              <td>{{ $projet->commune->nom_fr ?? 'Multiple'}}</td>
               <td>{{ $projet->annee_debut }}</td>
               <td>
                 <a href="{{ route('projet.show', $projet->id_projet) }}" class="btn-action btn-view" title="Voir">

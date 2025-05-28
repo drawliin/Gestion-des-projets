@@ -20,7 +20,7 @@ class CreateProjetsTable extends Migration
             $table->string('etat_d_avancement_financier', 50)->nullable();
             $table->text('commentaires')->nullable();
 
-            $table->unsignedBigInteger('id_province')->nullable();
+            $table->unsignedBigInteger('id_province');
             $table->unsignedBigInteger('id_commune')->nullable();
             $table->unsignedBigInteger('id_programme');
 

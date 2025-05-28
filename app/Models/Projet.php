@@ -35,10 +35,24 @@ class Projet extends Model
 
     public function commune()
     {
+        // A project may optionally belong to ONE commune (if no sub-projects exist)
         return $this->belongsTo(Commune::class, 'id_commune');
     }
 
-    public function programme(): BelongsTo
+    public function sousProjetsCommunes()
+    {
+        return $this->hasManyThrough(
+            Commune::class,            // Final model you want
+            SousProjetLocalise::class, // Intermediate model
+            'id_projet',               // Foreign key on SousProjetLocalise table
+            'id_commune',              // Foreign key on Commune table
+            'id_projet',               // Local key on Projet table
+            'id_commune'               // Local key on SousProjetLocalise table
+        );
+    }
+
+
+    public function programme()
     {
         return $this->belongsTo(Programme::class, 'id_programme');
     }

@@ -38,7 +38,14 @@
       <div class="form-row">
         <div class="form-group">
           <label>Commune</label>
-          <div>{{ $projet->commune?->nom_fr }}</div>
+          @if ($projet->id_commune)
+            <div>{{ $projet->commune?->nom_fr }}</div>
+          @else
+              @foreach ($projet->sousProjetsCommunes->unique('id_commune') as $commune)
+              <div>{{ $commune->nom_fr }}</div>
+              @endforeach
+          @endif
+          
         </div>
         <div class="form-group">
           <label>Année Début</label>

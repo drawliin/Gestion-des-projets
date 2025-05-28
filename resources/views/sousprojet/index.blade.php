@@ -16,16 +16,16 @@
     <div class="form-content">
         <div class="form-title">
             @if (session('success'))
-            <div class="custom-alert success">
-               {{ session('success') }}
-            </div>
-       @endif
+                    <div class="custom-alert success">
+                    {{ session('success') }}
+                    </div>
+            @endif
 
-       @if (session('error'))
-           <div class="custom-alert error">
-           {{ session('error') }}
-           </div>
-       @endif
+            @if (session('error'))
+                <div class="custom-alert error">
+                {{ session('error') }}
+                </div>
+            @endif
             <h2>LISTE DES</h2>
             <h1>Sous-Projets</h1>
 

@@ -208,39 +208,37 @@
 
     <div class="main-content">
         <div class="form-container">
-            <div class="form-header">
+        <div class="form-header">
     </div>
-        <div class="form-content">
+    <div class="form-content">
         <div class="form-title">
-  <h1>Dashboard - Suivi d'avancement des projets/sous-projets</h1>
-  <div> </div>
-    <div class="dashboard">
-  {{-- Cards synthèse --}}
-<div class="cards">
-  <div class="card">
-    <i class="fa-solid fa-folder-open icon"></i>
-    <h3>Total Projets</h3>
-    <p>{{ $totalProjets }}</p>
-  </div>
-  <div class="card">
-    <i class="fa-solid fa-project-diagram icon"></i>
-    <h3>Total Sous-Projets</h3>
-    <p>{{ $totalSousProjets }}</p>
-  </div>
-  <div class="card">
-    <i class="fa-solid fa-tachometer-alt icon"></i>
-    <h3>Moyenne Avancement Physique</h3>
-    <p>{{ number_format($avgPhysique, 2) }}%</p>
-  </div>
-  <div class="card">
-    <i class="fa-solid fa-dollar-sign icon"></i>
-    <h3>Moyenne Avancement Financier</h3>
-    <p>{{ number_format($avgFinancier, 2) }}%</p>
-  </div>
-</div>
-</div>
+          <h1>Dashboard - Suivi d'avancement des projets/sous-projets</h1>
+          <div class="dashboard">
+            <div class="cards">
+              <div class="card">
+                <i class="fa-solid fa-folder-open icon"></i>
+                <h3>Total Projets</h3>
+                <p>{{ $totalProjets }}</p>
+              </div>
+              <div class="card">
+                <i class="fa-solid fa-project-diagram icon"></i>
+                <h3>Total Sous-Projets</h3>
+                <p>{{ $totalSousProjets }}</p>
+              </div>
+              <div class="card">
+                <i class="fa-solid fa-tachometer-alt icon"></i>
+                <h3>Moyenne Avancement Physique</h3>
+                <p>{{ number_format($avgPhysique, 2) }}%</p>
+              </div>
+              <div class="card">
+                <i class="fa-solid fa-dollar-sign icon"></i>
+                <h3>Moyenne Avancement Financier</h3>
+                <p>{{ number_format($avgFinancier, 2) }}%</p>
+              </div>
+            </div>
+          </div>
 
-  </div>
+        </div>
 
   {{-- Graphiques --}}
   <div class="charts">
@@ -264,155 +262,62 @@
         <canvas id="barChart" style="max-height: 300px;"></canvas>
     </div>
 </div>
-<div class="max-w-7xl mx-auto px-4 py-6">
-  <div class="bg-white shadow rounded-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Liste des projets et sous-projets</h2>
-  </div>
-
-{{-- Table Projets --}}
-<div class="mb-10 overflow-x-auto">
-  <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
-    <i class="fas fa-arrow-right text-blue-600"></i>Projets</h3>
-  <table class="w-full text-sm text-left border border-gray-200">
-    <thead class="bg-gray-100 text-gray-700 uppercase">
-      <tr>
-        <th class="px-4 py-2">Code</th>
-        <th class="px-4 py-2">Nom</th>
-        <th class="px-4 py-2">Province</th>
-        <th class="px-4 py-2">Commune</th>
-        <th class="px-4 py-2">Année début</th>
-        <th class="px-4 py-2 text-center">Détails</th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse ($projets as $projet)
-        <tr class="border-t hover:bg-gray-50">
-          <td class="px-4 py-2">{{ $projet->code_du_projet }}</td>
-          <td class="px-4 py-2">{{ $projet->nom_du_projet }}</td>
-          <td class="px-4 py-2">{{ $projet->province->description_province_fr ?? '-' }}</td>
-          <td class="px-4 py-2">{{ $projet->commune->nom_fr ?? '-' }}</td>
-          <td class="px-4 py-2">{{ \Carbon\Carbon::parse($projet->annee_debut)->format('Y') }}</td>
-          <td class="px-4 py-2 text-center">
-            <a href="{{ route('projets.show', $projet) }}" class="text-blue-600 hover:text-blue-800" title="Voir détails">
-              <i class="fas fa-eye"></i>
-            </a>
-          </td>
-        </tr>
-      @empty
-        <tr><td colspan="8" class="px-4 py-3 text-center text-gray-500">Aucun projet trouvé.</td></tr>
-      @endforelse
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="pagination mt-10">
-    {{ $sousProjets->links('pagination::simple-tailwind') }}
-  
-</div>
-<div class="mb-10 overflow-x-auto">
-{{-- Table Sous-projets --}}
-
-  <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
-    <i class="fas fa-arrow-right text-purple-600"></i>
-    Sous-projets
-  </h3>
-
-  <table class="w-full text-sm text-left border border-gray-200">
-    <thead class="bg-gray-100 text-gray-700 uppercase">
-      <tr>
-        <th class="px-4 py-2">Code</th>
-        <th class="px-4 py-2">Nom</th>
-        <th class="px-4 py-2">Projet parent</th>
-        <th class="px-4 py-2">Province</th>
-        <th class="px-4 py-2">Commune</th>
-        <th class="px-4 py-2 text-center">Détails</th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse ($sousProjets as $sousProjet)
-        <tr class="border-t hover:bg-gray-50">
-          <td class="px-4 py-2">{{ $sousProjet->code_du_sous_projet }}</td>
-          <td class="px-4 py-2">{{ $sousProjet->nom_du_sous_projet }}</td>
-          <td class="px-4 py-2">{{ $sousProjet->projet->nom_du_projet ?? '-' }}</td>
-          <td class="px-4 py-2">{{ $sousProjet->province->description_province_fr ?? '-' }}</td>
-          <td class="px-4 py-2">{{ $sousProjet->commune->nom_fr ?? '-' }}</td>
-          <td class="px-4 py-2 text-center">
-            <a href="{{ route('sous-projets.show', $sousProjet) }}" class="text-blue-600 hover:text-blue-800" title="Voir détails">
-              <i class="fas fa-eye"></i>
-            </a>
-          </td>
-        </tr>
-      @empty
-        <tr><td colspan="8" class="px-4 py-3 text-center text-gray-500">Aucun sous-projet trouvé.</td></tr>
-      @endforelse
-    </tbody>
-  </table>
-
-  <div class="pagination mt-4">
-    {{ $sousProjets->links('pagination::simple-tailwind') }}
-  </div>
-</div>
-
-  </div>
-</div>
 
 
-{{-- Chart.js --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Donut Chart - Répartition par année
-const anneeLabels = {!! json_encode($projetsParAnnee->pluck('annee')) !!};
-const anneeData = {!! json_encode($projetsParAnnee->pluck('total')) !!};
 
-new Chart(document.getElementById('donutProjetAnnee'), {
-  type: 'doughnut',
-  data: {
-    labels: anneeLabels,
-    datasets: [{
-      data: anneeData,
-      backgroundColor: ['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d'],
-      borderColor: '#fff',
-      borderWidth: 1
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { font: { size: 12 } }
+  const anneeLabels = {!! json_encode($projetsParAnnee->pluck('annee')) !!};
+  const anneeData = {!! json_encode($projetsParAnnee->pluck('total')) !!};
+
+  new Chart(document.getElementById('donutProjetAnnee'), {
+    type: 'doughnut',
+    data: {
+      labels: anneeLabels,
+      datasets: [{
+        data: anneeData,
+        backgroundColor: ['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d'],
+        borderColor: '#fff',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { font: { size: 12 } }
+        }
       }
     }
-  }
-});
+  });
 
-// Donut Chart - Répartition par province
-const provinceLabels = {!! json_encode($projetsParProvince->pluck('province')) !!};
-const provinceData = {!! json_encode($projetsParProvince->pluck('total')) !!};
+  // Donut Chart - Répartition par province
+  const provinceLabels = {!! json_encode($projetsParProvince->pluck('province')) !!};
+  const provinceData = {!! json_encode($projetsParProvince->pluck('total')) !!};
 
-new Chart(document.getElementById('donutProjetProvince'), {
-  type: 'doughnut',
-  data: {
-    labels: provinceLabels,
-    datasets: [{
-      data: provinceData,
-      backgroundColor: ['#43aa8b', '#577590', '#f9c74f', '#f9844a', '#f8961e'],
-      borderColor: '#fff',
-      borderWidth: 1
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { font: { size: 12 } }
+  new Chart(document.getElementById('donutProjetProvince'), {
+    type: 'doughnut',
+    data: {
+      labels: provinceLabels,
+      datasets: [{
+        data: provinceData,
+        backgroundColor: ['#43aa8b', '#577590', '#f9c74f', '#f9844a', '#f8961e'],
+        borderColor: '#fff',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { font: { size: 12 } }
+        }
       }
     }
-  }
-});
+  });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const barCtx = document.getElementById('barChart').getContext('2d');
 

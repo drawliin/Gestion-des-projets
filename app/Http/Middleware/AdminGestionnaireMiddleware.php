@@ -15,7 +15,7 @@ class AdminGestionnaireMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check() || (!auth()->user()->hasRole('gestionnaire') && !auth()->user()->hasRole('admin') && !auth()->user()->hasRole('directeur'))){
+        if(!auth()->check() || (!auth()->user()->hasRole('gestionnaire') && !auth()->user()->hasRole('admin'))){
             return redirect("/");
         }
         return $next($request);

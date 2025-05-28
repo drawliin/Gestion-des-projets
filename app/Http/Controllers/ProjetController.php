@@ -66,8 +66,13 @@ class ProjetController extends Controller
     }
 
     public function show($id){
-        $projet = Projet::with(['programme', 'province', 'commune'])->findOrFail($id);
+        $projet = Projet::with(['programme', 'province'])->find($id);
+        if(!$projet->id_commune){
+            $projet->load('sousProjetsLocalises', 'sousProjetsCommunes');
+        }
+        $projet->load('commune');
         return view('projet.details', compact('projet'));
+
     }
 
     public function edit($id)

@@ -40,6 +40,9 @@ class SousprojetController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return abort(403);
+        }
         $projets = Projet::all();
         $provinces = Province::all();
         $communes = Commune::all();
@@ -96,6 +99,9 @@ class SousprojetController extends Controller
      */
     public function edit(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return abort(403);
+        }
         $sousProjet = SousProjetLocalise::findOrFail($id);
         $projets = Projet::all();
         $provinces = Province::all();
@@ -145,6 +151,9 @@ class SousprojetController extends Controller
      */
     public function destroy(string $id)
     {
+        if(!auth()->user()->hasRole('gestionnaire')){
+            return abort(403);
+        }
         try{
         $sousProjet = SousProjetLocalise::findOrFail($id);
         $sousProjet->delete();

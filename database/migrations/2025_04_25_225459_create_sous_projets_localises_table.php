@@ -9,7 +9,6 @@ class CreateSousProjetsLocalisesTable extends Migration
     public function up()
     {
         Schema::create('sous_projets_localises', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_province');
             $table->unsignedBigInteger('id_commune');
             $table->unsignedBigInteger('id_projet');
 
@@ -35,7 +34,6 @@ class CreateSousProjetsLocalisesTable extends Migration
             // Foreign keys
             $table->foreign('id_projet')->references('id_projet')->on('projets');
             $table->foreign('id_commune')->references('id_commune')->on('communes');
-            $table->foreign('id_province')->references('id_province')->on('provinces');
         });
     }
 
