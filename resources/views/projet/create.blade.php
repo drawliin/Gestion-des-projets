@@ -112,6 +112,7 @@
         const provinceSelect = document.getElementById('id_province');
         const communeSelect = document.getElementById('id_commune');
         communeSelect.disabled = true;
+        communeSelect.innerHTML = '<option value="">Sélectionner</option>';
 
         if (provinceSelect && communeSelect) {
           
@@ -120,7 +121,6 @@
                 if (!provinceId) {
                     // Disable commune select and reset options
                     communeSelect.disabled = true;
-                    communeSelect.innerHTML = '<option value="">Sélectionner</option>';
                     return;
                 }
                 communeSelect.innerHTML = '<option value="">Chargement...</option>';
