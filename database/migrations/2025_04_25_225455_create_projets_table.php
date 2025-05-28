@@ -21,7 +21,6 @@ class CreateProjetsTable extends Migration
             $table->text('commentaires')->nullable();
 
             $table->unsignedBigInteger('id_province');
-            $table->unsignedBigInteger('id_commune')->nullable();
             $table->unsignedBigInteger('id_programme');
 
             $table->timestamps();
@@ -29,7 +28,6 @@ class CreateProjetsTable extends Migration
             // Foreign keys
             $table->foreign('id_programme')->references('id_programme')->on('programmes');
             $table->foreign('id_province')->references('id_province')->on('provinces');
-            $table->foreign('id_commune')->references('id_commune')->on('communes');
         });
     }
 

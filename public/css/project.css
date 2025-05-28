@@ -345,6 +345,9 @@ table tbody tr:hover {
   .form-group {
     flex: 1;
   }
+  .form-group ul{
+    list-style: none;
+  }
 
   .form-group.full-width {
     flex: 1 0 100%;

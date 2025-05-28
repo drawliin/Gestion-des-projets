@@ -35,8 +35,12 @@ class Projet extends Model
 
     public function commune()
     {
-        // A project may optionally belong to ONE commune (if no sub-projects exist)
-        return $this->belongsTo(Commune::class, 'id_commune');
+        return $this->belongsToMany(
+            Commune::class,
+            'commune_projet',           // your actual pivot table name
+            'projet_id_projet',         // foreign key on pivot table for Projet
+            'commune_id_commune'        // foreign key on pivot table for Commune
+        );
     }
 
     public function sousProjetsCommunes()

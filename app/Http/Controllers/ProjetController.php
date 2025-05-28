@@ -16,23 +16,28 @@ class ProjetController extends Controller
     {
         $search = $request->input("search");
 
-        if($search){
-            $projets = Projet::with(['programme', 'province', 'commune'])->where("code_du_projet", "like", "%{$search}%")
+        $query = Projet::with(['programme', 'province', 'commune', 'sousProjetsCommunes']);
+
+        if ($search) {
+            $query->where("code_du_projet", "like", "%{$search}%")
                 ->orWhere("nom_du_projet", "like", "%{$search}%")
                 ->orWhere("annee_debut", "like", "%{$search}%")
-                ->orWhereHas('province', function ($query) use ($search) {
-                    $query->where("description_province_fr", "like", "%{$search}%");
+                ->orWhereHas('province', function ($q) use ($search) {
+                    $q->where("description_province_fr", "like", "%{$search}%");
                 })
-                ->orWhereHas('commune', function ($query) use ($search) {
-                    $query->where("nom_fr", "like", "%{$search}%");
+                ->orWhereHas('commune', function ($q) use ($search) {
+                    $q->where("nom_fr", "like", "%{$search}%");
                 })
-                ->get();
-        }else{
-            $projets = Projet::with(['programme', 'province', 'commune'])->get();
+                ->orWhereHas('sousProjetsCommunes', function ($q) use ($search) {
+                    $q->where("nom_fr", "like", "%{$search}%");
+                });
         }
+
+        $projets = $query->get();
 
         return view('projet.index', compact('projets'));
     }
+
 
     public function create()
     {
@@ -67,10 +72,13 @@ class ProjetController extends Controller
 
     public function show($id){
         $projet = Projet::with(['programme', 'province'])->find($id);
-        if(!$projet->id_commune){
-            $projet->load('sousProjetsLocalises', 'sousProjetsCommunes');
+        
+        if ($projet->sousProjetsLocalises()->exists()) {
+            $projet->load(['sousProjetsLocalises', 'sousProjetsCommunes']);
+        } else {
+            $projet->load('communes');
         }
-        $projet->load('commune');
+
         return view('projet.details', compact('projet'));
 
     }

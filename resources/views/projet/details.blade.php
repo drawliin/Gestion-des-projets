@@ -38,13 +38,22 @@
       <div class="form-row">
         <div class="form-group">
           <label>Commune</label>
-          @if ($projet->id_commune)
-            <div>{{ $projet->commune?->nom_fr }}</div>
-          @else
-              @foreach ($projet->sousProjetsCommunes->unique('id_commune') as $commune)
-              <div>{{ $commune->nom_fr }}</div>
-              @endforeach
-          @endif
+            <div>
+              <ul>
+                @if ($projet->commune->isNotEmpty())
+                  @foreach ($projet->commune as $commune)
+                      <li>{{ $commune->nom_fr }}</li>
+                  @endforeach
+                @elseif ($projet->sousProjetsCommunes->isNotEmpty())
+                  @foreach ($projet->sousProjetsCommunes as $commune)
+                      <li>{{ $commune->nom_fr }}</li>
+                  @endforeach
+                @else
+                  {{"Aucune commune"}}
+                @endif
+                <ul>
+            </div>
+          
           
         </div>
         <div class="form-group">

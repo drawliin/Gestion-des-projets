@@ -10,6 +10,7 @@ use App\Models\Chantier;
 use App\Models\Programme;
 use App\Models\Projet;
 use App\Models\SousProjetLocalise;
+use App\Models\CommuneProjet;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -276,7 +277,6 @@ class DatabaseSeeder extends Seeder
                 'etat_d_avancement_financier' => '30%',
                 'commentaires' => 'Projet en cours avec 5 sites identifiés',
                 'id_province' => 1, // Oujda-Angad
-                'id_commune' => null,
                 'id_programme' => 1,
             ],
             [
@@ -290,7 +290,6 @@ class DatabaseSeeder extends Seeder
                 'etat_d_avancement_financier' => '80%',
                 'commentaires' => '3 centres déjà opérationnels',
                 'id_province' => 2, // Berkane
-                'id_commune' => 15, // Boughriba (Berkane province)
                 'id_programme' => 2,
             ],
             [
@@ -304,7 +303,6 @@ class DatabaseSeeder extends Seeder
                 'etat_d_avancement_financier' => '15%',
                 'commentaires' => 'Phase d\'études techniques en cours',
                 'id_province' => 3, // Taourirt
-                'id_commune' => null,
                 'id_programme' => 3,
             ],
             [
@@ -318,7 +316,6 @@ class DatabaseSeeder extends Seeder
                 'etat_d_avancement_financier' => '40%',
                 'commentaires' => '1200 foyers déjà équipés',
                 'id_province' => 4, // Figuig
-                'id_commune' => null,
                 'id_programme' => 7,
             ],
             [
@@ -332,7 +329,6 @@ class DatabaseSeeder extends Seeder
                 'etat_d_avancement_financier' => '95%',
                 'commentaires' => 'Projet en phase finale',
                 'id_province' => 5, // Jerada
-                'id_commune' => 25, // Ras Asfour (Jerada province)
                 'id_programme' => 10,
             ],
         ];
@@ -349,9 +345,6 @@ class DatabaseSeeder extends Seeder
         $localites = ['Zone rurale', 'Périurbain', 'Centre ville', 'Zone montagneuse', 'Zone désertique'];
 
         foreach (Projet::all() as $projet) {
-            if (!is_null($projet->id_commune)) {
-                continue; // Skip projects that already have a direct commune
-            }
 
             $num_sous_projets = rand(2, 4);
 
@@ -390,6 +383,23 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        $commune_projet = [
+            [
+                "projet_id_projet" => 2, 
+                "commune_id_commune" => 15
+            ],
+            [
+                "projet_id_projet" => 5, 
+                "commune_id_commune" => 25
+            ]
+        ];
+        
+        foreach($commune_projet as $cp){
+            CommuneProjet::create($cp);
+        }
+
+
 
     }
 }
