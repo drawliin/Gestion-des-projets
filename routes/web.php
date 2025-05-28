@@ -23,6 +23,10 @@ Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
     Route::resource('chantier', ChantierController::class);
     Route::resource('programme', ProgrammeController::class);
 });
+Route::middleware(['auth', 'role:gestionnaire'])->group(function (){
+    Route::get('/communes/by-province/{province_id}', [CommuneController::class, 'getByProvince']);
+});
+
 Route::middleware(['auth'])->group(function (){
     Route::resource('projet', ProjetController::class);
     Route::resource('sousprojet', SousprojetController::class);

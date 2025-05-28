@@ -99,6 +99,13 @@ class CommuneController extends Controller
 
     }
 
+    public function getByProvince($province_id)
+    {
+        $communes = Commune::where('id_province', $province_id)->get();
+        return response()->json($communes);
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */

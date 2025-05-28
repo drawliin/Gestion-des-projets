@@ -68,13 +68,7 @@
             <div class="form-group">
                 <label for="id_commune">Commune <span class="required">*</span></label>
                 <div class="select-wrapper">
-                    <select id="id_commune" name="id_commune" required>
-                        <option value="">Sélectionner</option>
-                        @foreach($communes as $commune)
-                            <option value="{{ $commune->id_commune }}"> {{ $commune->nom_fr }}
-                         </option>
-                        @endforeach
-
+                    <select id="id_commune" name="id_commune">
                       </select>
                 </div>
               </div>
@@ -112,3 +106,40 @@
 </div>
 
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const provinceSelect = document.getElementById('id_province');
+        const communeSelect = document.getElementById('id_commune');
+        communeSelect.disabled = true;
+
+        if (provinceSelect && communeSelect) {
+          
+            provinceSelect.addEventListener('change', function () {
+                const provinceId = this.value;
+                if (!provinceId) {
+                    // Disable commune select and reset options
+                    communeSelect.disabled = true;
+                    communeSelect.innerHTML = '<option value="">Sélectionner</option>';
+                    return;
+                }
+                communeSelect.innerHTML = '<option value="">Chargement...</option>';
+
+                if (provinceId) {
+                    fetch(`/communes/by-province/${provinceId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            communeSelect.innerHTML = '<option value="">Sélectionner</option>';
+                            data.forEach(commune => {
+                                communeSelect.innerHTML += `<option value="${commune.id_commune}">${commune.nom_fr}</option>`;
+                            });
+                            communeSelect.disabled = false;
+
+                        });
+                } else {
+                    communeSelect.innerHTML = '<option value="">Sélectionner</option>';
+                }
+            });
+        }
+    });
+</script>
