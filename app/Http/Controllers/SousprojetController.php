@@ -19,18 +19,25 @@ class SousprojetController extends Controller
         $search = $request->input("search");
 
         if($search){
-            $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->where("code_du_sous_projet", "like", "%{$search}%")
-                ->orWhere("nom_du_sous_projet", "like", "%{$search}%")
-                ->orWhere("estimation_initiale", "like", "%{$search}%")
-                ->orWhereHas('projet', function ($query) use ($search) {
-                    $query->where("nom_du_projet", "like", "%{$search}%");
-                })
-                ->orWhereHas('commune', function ($query) use ($search) {
-                    $query->where("nom_fr", "like", "%{$search}%");
-                })
-                ->get();
+            $sousProjets = SousProjetLocalise::with(['projet', 'commune.province'])->where(function ($query) use ($search) {
+                $query->where("code_du_sous_projet", "like", "%{$search}%")
+                    ->orWhere("nom_du_sous_projet", "like", "%{$search}%")
+                    ->orWhere("estimation_initiale", "like", "%{$search}%")
+                    ->orWhereHas('projet', function ($q) use ($search) {
+                        $q->where("nom_du_projet", "like", "%{$search}%");
+                    })
+                    ->orWhereHas('commune', function ($q) use ($search) {
+                        $q->where("nom_fr", "like", "%{$search}%")
+                        ->orWhereHas('province', function ($q2) use ($search) {
+                            $q2->where("description_province_fr", "like", "%{$search}%");
+                        });
+                    });
+            })
+            ->get();
+
         }else{
-            $sousProjets = SousProjetLocalise::with(['projet', 'province', 'commune'])->get();
+            $sousProjets = SousProjetLocalise::with(['projet', 'commune.province'])->get();
+            
         }
         return view('sousprojet.index', compact('sousProjets'));
     }
@@ -47,7 +54,7 @@ class SousprojetController extends Controller
         $provinces = Province::all();
         $communes = Commune::all();
 
-        return view('sousprojet.create', compact('projets', 'provinces', 'communes'));
+        return view('sousprojet.create', compact('projets', 'communes'));
     }
 
     /**
@@ -90,7 +97,7 @@ class SousprojetController extends Controller
      */
     public function show(string $id)
     {
-        $sousProjet = SousProjetLocalise::with(['projet', 'province', 'commune'])->findOrFail($id);
+        $sousProjet = SousProjetLocalise::with(['projet', 'commune'])->findOrFail($id);
         return view('sousprojet.details', compact('sousProjet'));
     }
 
@@ -107,7 +114,7 @@ class SousprojetController extends Controller
         $provinces = Province::all();
         $communes = Commune::all();
 
-        return view('sousprojet.edit', compact('sousProjet', 'projets', 'provinces', 'communes'));
+        return view('sousprojet.edit', compact('sousProjet', 'projets', 'communes'));
 
     }
 

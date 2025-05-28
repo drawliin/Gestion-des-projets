@@ -54,13 +54,13 @@ class DatabaseSeeder extends Seeder
 
         $provinces = [
             ['code_province' => 'P110', 'description_province_fr' => 'Oujda-Angad', 'description_province_ar' => 'وجدة-أنكاد'],
-            ['code_province' => 'P111', 'description_province_fr' => 'Nador', 'description_province_ar' => 'الناظور'],
             ['code_province' => 'P112', 'description_province_fr' => 'Berkane', 'description_province_ar' => 'بركان'],
-            ['code_province' => 'P113', 'description_province_fr' => 'Driouch',  'description_province_ar' => 'الدريوش'],
-            ['code_province' => 'P114', 'description_province_fr' => 'Figuig', 'description_province_ar' => 'الفيق'],
             ['code_province' => 'P115', 'description_province_fr' => 'Taourirt', 'description_province_ar' => 'تاوريرت'],
+            ['code_province' => 'P114', 'description_province_fr' => 'Figuig', 'description_province_ar' => 'فكيك'],
             ['code_province' => 'P116', 'description_province_fr' => 'Jerada', 'description_province_ar' => 'جرادة'],
             ['code_province' => 'P117', 'description_province_fr' => 'Guercif', 'description_province_ar' => 'جرسيف'],
+            ['code_province' => 'P111', 'description_province_fr' => 'Nador', 'description_province_ar' => 'الناظور'],
+            ['code_province' => 'P113', 'description_province_fr' => 'Driouch',  'description_province_ar' => 'الدريوش'],
         ];
 
         foreach ($provinces as $province) {
@@ -149,7 +149,7 @@ class DatabaseSeeder extends Seeder
             ['code_commune' => 'C15014', 'nom_fr' => 'Oulad Sidi Abdelhakem','nom_ar' => 'أولاد سيدي عبد الحاكم', 'id_province' => 5],
 
             // Guercif (id_province = 6)
-            ['code_commune' => 'C16001', 'nom_fr' => 'Guercif',            'nom_ar' => 'ڨرسيف', 'id_province' => 6],
+            ['code_commune' => 'C16001', 'nom_fr' => 'Guercif',            'nom_ar' => 'جرسيف', 'id_province' => 6],
             ['code_commune' => 'C16002', 'nom_fr' => 'Assebbab',           'nom_ar' => 'السبعاب', 'id_province' => 6],
             ['code_commune' => 'C16003', 'nom_fr' => 'Barkine',            'nom_ar' => 'باركين', 'id_province' => 6],
             ['code_commune' => 'C16004', 'nom_fr' => 'Houara Oulad Raho',  'nom_ar' => 'هوارة أولاد رحو', 'id_province' => 6],
@@ -349,24 +349,24 @@ class DatabaseSeeder extends Seeder
         $localites = ['Zone rurale', 'Périurbain', 'Centre ville', 'Zone montagneuse', 'Zone désertique'];
 
         foreach (Projet::all() as $projet) {
-            $num_sous_projets = rand(0, 5);
-            
+            if (!is_null($projet->id_commune)) {
+                continue; // Skip projects that already have a direct commune
+            }
+
+            $num_sous_projets = rand(2, 4);
+
             $communes_province = Commune::where('id_province', $projet->id_province)->get();
-            
+
             if ($communes_province->isEmpty()) {
                 continue; 
             }
-            if ($projet->id_commune === null && $num_sous_projets === 0) {
-                $random_commune = $communes_province->random();
-                $projet->update(['id_commune' => $random_commune->id_commune]);
-            }
-    
-            // Create sub-projects
-            for ($i = 0; $i < $num_sous_projets; $i++) {
-                $random_commune = $communes_province->random();
+
+            $selected_communes = $communes_province->random(min($num_sous_projets, $communes_province->count()))->values();
+
+            foreach ($selected_communes as $i => $random_commune) {
                 $estimation = rand(100000, 800000);
                 $avancement = rand(10, 100);
-        
+
                 SousProjetLocalise::create([
                     'code_du_sous_projet' => 'SPJ-' . $projet->id_projet . '-' . ($i + 1),
                     'nom_du_sous_projet' => 'Sous-projet ' . ($i + 1) . ' - ' . $projet->nom_du_projet,
@@ -382,7 +382,7 @@ class DatabaseSeeder extends Seeder
                     'beneficiaire' => rand(50, 500) . ' bénéficiaires',
                     'estimation_initiale' => $estimation,
                     'avancement_physique' => $avancement . '%',
-                    'avancement_financier' => ($avancement + rand(-10, 10)) . '%',
+                    'avancement_financier' => max(0, min(100, $avancement + rand(-10, 10))) . '%',
                     'commentaires' => 'Commentaires pour le sous-projet ' . ($i + 1),
                     'localite' => $localites[array_rand($localites)],
                     'id_projet' => $projet->id_projet,
@@ -390,5 +390,6 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
     }
 }

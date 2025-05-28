@@ -44,6 +44,7 @@
                     <th>Nom</th>
                     <th>Projet</th>
                     <th>Commune</th>
+                    <th>Province</th>
                     <th>Estimation</th>
                     <th>Actions</th>
                 </tr>
@@ -55,6 +56,7 @@
                     <td>{{ $sousprojet->nom_du_sous_projet }}</td>
                     <td>{{ $sousprojet->projet->nom_du_projet ?? '' }}</td>
                     <td>{{ $sousprojet->commune->nom_fr ?? '' }}</td>
+                    <td>{{$sousprojet->commune->province->description_province_fr}}</td>
                     <td>{{ $sousprojet->estimation_initiale }} DH</td>
                     <td>
                         <a href="{{ route('sousprojet.show', $sousprojet->code_du_sous_projet) }}" class="btn-action btn-view" title="Voir détails">
