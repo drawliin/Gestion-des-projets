@@ -275,9 +275,10 @@ table tbody tr:hover {
   .form-container {
     background-color: var(--form-card-bg);
     border-radius: 10px;
-    margin: 20px;
+    margin: 10px;
     flex: 1;
     overflow: hidden;
+    padding: 55px 10px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -308,7 +309,7 @@ table tbody tr:hover {
 
   .form-content {
     padding: 20px;
-    overflow-y: auto;
+    overflow-y:scroll;
     flex: 1;
   }
 
@@ -376,21 +377,6 @@ table tbody tr:hover {
 
   select[multiple]{
     height: 200px;
-  }
-  .select-wrapper {
-    position: relative;
-  }
-
-  .select-wrapper::after {
-    content: "\f078";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: var(--text-secondary);
   }
 
   .date-input {

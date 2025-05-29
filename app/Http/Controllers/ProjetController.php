@@ -64,7 +64,8 @@ class ProjetController extends Controller
             'commentaires' => 'nullable|string',
             'id_province' => 'required|exists:provinces,id_province',
             'id_programme' => 'required|exists:programmes,id_programme',
-            'id_commune' => 'nullable|exists:communes,id_commune',
+            'id_commune' => 'nullable|array',
+            'id_commune.*' => 'nullable|exists:communes,id_commune',
         ],
         [
             "code_du_projet.unique" => "Le code du projet a déjà été pris",
@@ -80,11 +81,12 @@ class ProjetController extends Controller
 
         $newProjet = Projet::create($validated);
 
+        $createdProjet = Projet::with(['sousProjetsCommunes', 'commune'])->find($newProjet->id_projet);
+
         if($communeId){
-            CommuneProjet::create([
-                "projet_id_projet" => $newProjet->id_projet,
-                "commune_id_commune" => $communeId
-            ]);
+            $createdProjet->commune()->sync($communeId);
+        }else{
+            $createdProjet->commune()->detach(); 
         }
 
         return redirect()->route('projet.index')->with('success', 'Projet ajouté avec succès.');

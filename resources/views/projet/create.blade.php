@@ -49,7 +49,9 @@
               </select>
             </div>
           </div>
+        </div>
 
+        <div class="form-row">
           <div class="form-group">
             <label for="id_province">Province<span class="required">*</span></label>
             <div class="select-wrapper">
@@ -63,32 +65,34 @@
               </select>
             </div>
           </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_commune">Commune</label>
-                <div class="select-wrapper">
-                    <select id="id_commune" name="id_commune">
-                    </select>
-                </div>
-              </div>
+
           <div class="form-group">
-            <label for="annee_debut">Année Début <span class="required">*</span></label>
-            <input type="number" min="2015" max="2045" id="annee_debut" name="annee_debut" value="{{old("annee_debut")}}" required>
+              <label for="id_commune">Commune</label>
+              <div class="select-wrapper">
+                  <select id="id_commune" name="id_commune[]" multiple>
+                  </select>
+              </div>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
+            <label for="annee_debut">Année Début <span class="required">*</span></label>
+            <input type="number" min="2015" max="2045" id="annee_debut" name="annee_debut" value="{{old("annee_debut")}}" required>
+          </div>
+
+          <div class="form-group">
             <label for="annee_fin_prevue">Année Fin Prévue <span class="required">*</span></label>
             <input type="number" min="2015" max="2045" id="annee_fin_prevue" name="annee_fin_prevue" value="{{old("annee_fin_prevue")}}" required>
           </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group">
             <label for="etat_d_avancement_physique">Avancement Physique (%) <span class="required">*</span></label>
             <input type="number" id="etat_d_avancement_physique" name="etat_d_avancement_physique" value="{{old("etat_d_avancement_physique")}}" required>
           </div>
         </div>
-
         <div class="form-row">
           <div class="form-group full-width">
             <label for="commentaires">Commentaires <span class="required">*</span></label>
@@ -109,29 +113,26 @@
 
 <script>
     function loadCommunes (provinceSelect, communeSelect) {
-      const provinceId = provinceSelect.value;
-      if (!provinceId) {
-          // Disable commune select and reset options
-          communeSelect.disabled = true;
-          return;
-      }
-      communeSelect.innerHTML = '<option value="">Chargement...</option>';
-
-      if (provinceId) {
-          fetch(`/communes/by-province/${provinceId}`)
-              .then(response => response.json())
-              .then(data => {
-                  communeSelect.innerHTML = '<option value="">Sélectionner</option>';
-                  data.forEach(commune => {
-                      communeSelect.innerHTML += `<option value="${commune.id_commune}">${commune.nom_fr}</option>`;
-                  });
-                  communeSelect.disabled = false;
-
-              });
-      } else {
-          communeSelect.innerHTML = '<option value="">Sélectionner</option>';
-      }
+    const provinceId = provinceSelect.value;
+    if (!provinceId) {
+      
+        communeSelect.disabled = true;
+        communeSelect.innerHTML = '';
+        return;
     }
+
+    communeSelect.innerHTML = '<option disabled>Chargement...</option>';
+
+    fetch(`/communes/by-province/${provinceId}`)
+        .then(response => response.json())
+        .then(data => {
+            communeSelect.innerHTML = ''; 
+            data.forEach(commune => {
+                communeSelect.innerHTML += `<option value="${commune.id_commune}">${commune.nom_fr}</option>`;
+            });
+            communeSelect.disabled = false;
+        });
+}
 
     document.addEventListener('DOMContentLoaded', function () {
       const provinceSelect = document.getElementById('id_province');

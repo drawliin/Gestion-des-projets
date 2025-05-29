@@ -108,21 +108,24 @@
           </div>
         </div>
 
-        @role("financier")
         <div class="form-row">
-
+          
           <div class="form-group">
             <label for="etat_d_avancement_physique">Avancement Physique (%)</label>
             <input type="number" id="etat_d_avancement_physique" name="etat_d_avancement_physique" value="{{ $projet->etat_d_avancement_physique }}">
           </div>
-
+          
+          @role("financier")
           <div class="form-group">
             <label for="etat_d_avancement_financier">Avancement Financier (%)</label>
             <input type="number" id="etat_d_avancement_financier" name="etat_d_avancement_financier" value="{{ $projet->etat_d_avancement_financier }}">
           </div>
+          @endrole
+
 
         </div>
-
+          
+        @role("financier")
         <div class="form-row">
           
           <div class="form-group">
