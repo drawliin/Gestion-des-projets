@@ -35,7 +35,7 @@ class ProvinceController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->hasRole('gestionnare')){
+        if(!auth()->user()->hasRole('gestionnaire')){
             abort(403);
         }
         return view('province.create');

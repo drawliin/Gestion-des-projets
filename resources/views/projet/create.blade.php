@@ -29,11 +29,11 @@
         <div class="form-row">
           <div class="form-group">
             <label for="code_du_projet">Code Projet <span class="required">*</span></label>
-            <input type="text" id="code_du_projet" name="code_du_projet" required>
+            <input type="text" id="code_du_projet" name="code_du_projet" value="{{old("code_du_projet")}}" required>
           </div>
           <div class="form-group">
             <label for="nom_du_projet">Nom Projet <span class="required">*</span></label>
-            <input type="text" id="nom_du_projet" name="nom_du_projet" required>
+            <input type="text" id="nom_du_projet" name="nom_du_projet" value="{{old("nom_du_projet")}}" required>
           </div>
         </div>
 
@@ -66,33 +66,33 @@
         </div>
         <div class="form-row">
             <div class="form-group">
-                <label for="id_commune">Commune <span class="required">*</span></label>
+                <label for="id_commune">Commune</label>
                 <div class="select-wrapper">
                     <select id="id_commune" name="id_commune">
-                      </select>
+                    </select>
                 </div>
               </div>
           <div class="form-group">
             <label for="annee_debut">Année Début <span class="required">*</span></label>
-            <input type="number" min="2015" max="2045" id="annee_debut" name="annee_debut" required>
+            <input type="number" min="2015" max="2045" id="annee_debut" name="annee_debut" value="{{old("annee_debut")}}" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="annee_fin_prevue">Date Fin Prévue <span class="required">*</span></label>
-            <input type="number" min="2015" max="2045" id="annee_fin_prevue" name="annee_fin_prevue" required>
+            <label for="annee_fin_prevue">Année Fin Prévue <span class="required">*</span></label>
+            <input type="number" min="2015" max="2045" id="annee_fin_prevue" name="annee_fin_prevue" value="{{old("annee_fin_prevue")}}" required>
           </div>
           <div class="form-group">
             <label for="etat_d_avancement_physique">Avancement Physique (%) <span class="required">*</span></label>
-            <input type="number" id="etat_d_avancement_physique" name="etat_d_avancement_physique" required>
+            <input type="number" id="etat_d_avancement_physique" name="etat_d_avancement_physique" value="{{old("etat_d_avancement_physique")}}" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group full-width">
             <label for="commentaires">Commentaires <span class="required">*</span></label>
-            <textarea id="commentaires" name="commentaires"></textarea>
+            <textarea id="commentaires" name="commentaires">{{old("commentaires")}}</textarea>
           </div>
         </div>
 
@@ -108,38 +108,41 @@
 @endsection
 
 <script>
+    function loadCommunes (provinceSelect, communeSelect) {
+      const provinceId = provinceSelect.value;
+      if (!provinceId) {
+          // Disable commune select and reset options
+          communeSelect.disabled = true;
+          return;
+      }
+      communeSelect.innerHTML = '<option value="">Chargement...</option>';
+
+      if (provinceId) {
+          fetch(`/communes/by-province/${provinceId}`)
+              .then(response => response.json())
+              .then(data => {
+                  communeSelect.innerHTML = '<option value="">Sélectionner</option>';
+                  data.forEach(commune => {
+                      communeSelect.innerHTML += `<option value="${commune.id_commune}">${commune.nom_fr}</option>`;
+                  });
+                  communeSelect.disabled = false;
+
+              });
+      } else {
+          communeSelect.innerHTML = '<option value="">Sélectionner</option>';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
-        const provinceSelect = document.getElementById('id_province');
-        const communeSelect = document.getElementById('id_commune');
-        communeSelect.disabled = true;
-        communeSelect.innerHTML = '<option value="">Sélectionner</option>';
+      const provinceSelect = document.getElementById('id_province');
+      const communeSelect = document.getElementById('id_commune');
+      communeSelect.innerHTML = '<option value="">Sélectionner</option>';
 
-        if (provinceSelect && communeSelect) {
-          
-            provinceSelect.addEventListener('change', function () {
-                const provinceId = this.value;
-                if (!provinceId) {
-                    // Disable commune select and reset options
-                    communeSelect.disabled = true;
-                    return;
-                }
-                communeSelect.innerHTML = '<option value="">Chargement...</option>';
-
-                if (provinceId) {
-                    fetch(`/communes/by-province/${provinceId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            communeSelect.innerHTML = '<option value="">Sélectionner</option>';
-                            data.forEach(commune => {
-                                communeSelect.innerHTML += `<option value="${commune.id_commune}">${commune.nom_fr}</option>`;
-                            });
-                            communeSelect.disabled = false;
-
-                        });
-                } else {
-                    communeSelect.innerHTML = '<option value="">Sélectionner</option>';
-                }
-            });
-        }
+      provinceSelect.addEventListener('change', function(){
+        loadCommunes(provinceSelect, communeSelect)
+      });
+      
+      loadCommunes(provinceSelect, communeSelect)
+      
     });
 </script>

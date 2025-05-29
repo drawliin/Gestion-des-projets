@@ -374,6 +374,9 @@ table tbody tr:hover {
     color: var(--text-primary);
   }
 
+  select[multiple]{
+    height: 200px;
+  }
   .select-wrapper {
     position: relative;
   }

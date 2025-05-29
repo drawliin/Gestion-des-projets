@@ -66,11 +66,11 @@
               <td>
                 @if ($projet->commune->isNotEmpty())
                     @foreach ($projet->commune as $commune)
-                        {{ $commune->nom_fr }}
+                        {{ $commune->nom_fr }}<br>
                     @endforeach
                 @elseif ($projet->sousProjetsCommunes->isNotEmpty())
                     @foreach ($projet->sousProjetsCommunes as $commune)
-                        {{ $commune->nom_fr }}
+                        {{ $commune->nom_fr }}<br>
                     @endforeach
                 @else
                     {{"Aucune commune"}}

@@ -8,6 +8,7 @@ use App\Models\Province;
 use App\Models\Programme;
 use Illuminate\Http\Request;
 use App\Models\SousProjetLocalise;
+use App\Models\CommuneProjet;
 use Illuminate\Database\QueryException;
 
 class ProjetController extends Controller
@@ -54,33 +55,44 @@ class ProjetController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'code_du_projet' => 'required|unique:projets,code_du_projet',
             'nom_du_projet' => 'required|string',
             'annee_debut' => 'required|integer|min:2015|max:2045',
-            'annee_fin_prevue' => 'required|integer|after_or_equal:annee_debut|min:2015|max:2045',
+            'annee_fin_prevue' => 'required|integer|after_or_equal:annee_debut|max:2045',
             'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
             'commentaires' => 'nullable|string',
             'id_province' => 'required|exists:provinces,id_province',
-            'id_commune' => 'required|exists:communes,id_commune',
             'id_programme' => 'required|exists:programmes,id_programme',
+            'id_commune' => 'nullable|exists:communes,id_commune',
+        ],
+        [
+            "code_du_projet.unique" => "Le code du projet a déjà été pris",
+            "annee_fin_prevue.after_or_equal" => "Le champ année fin prévue doit être une date postérieure ou égale à année début"
         ]);
+        
+        $communeId = null;
+        if(!empty($validated["id_commune"])){
+            $communeId = $validated["id_commune"];
+        }
 
-        Projet::create($request->all());
+        unset($validated["id_commune"]);
+
+        $newProjet = Projet::create($validated);
+
+        if($communeId){
+            CommuneProjet::create([
+                "projet_id_projet" => $newProjet->id_projet,
+                "commune_id_commune" => $communeId
+            ]);
+        }
+
         return redirect()->route('projet.index')->with('success', 'Projet ajouté avec succès.');
     }
 
     public function show($id){
-        $projet = Projet::with(['programme', 'province'])->find($id);
-        
-        if ($projet->sousProjetsLocalises()->exists()) {
-            $projet->load(['sousProjetsLocalises', 'sousProjetsCommunes']);
-        } else {
-            $projet->load('communes');
-        }
-
+        $projet = Projet::with(['programme', 'province', 'sousProjetsCommunes', 'commune'])->find($id);
         return view('projet.details', compact('projet'));
-
     }
 
     public function edit($id)
@@ -89,34 +101,44 @@ class ProjetController extends Controller
             return redirect()->route('programme.index');
         }
 
-        $projet = Projet::findOrFail($id);
+        $projet = Projet::with(['programme', 'province', 'sousProjetsCommunes', 'commune'])->find($id);
         $programmes = Programme::all();
         $provinces = Province::all();
-        $communes = Commune::all();
+        $communes = Commune::where("id_province", $projet->province?->id_province)->get();
 
         return view('projet.edit', compact('projet', 'programmes', 'provinces', 'communes'));
     }
 
     public function update(Request $request, $id)
     {
-        $projet = Projet::findOrFail($id);
+        $projet = Projet::with(['sousProjetsCommunes', 'commune'])->find($id);
 
-        $request->validate([
+        $validated = $request->validate([
             'code_du_projet' => 'required|unique:projets,code_du_projet,' . $id . ',id_projet',
             'nom_du_projet' => 'required|string',
-            'cout_cro' => 'required|numeric',
-            'cout_total_du_projet' => 'required|numeric',
-            'annee_debut' => 'required|date',
-            'annee_fin_prevue' => 'required|date|after_or_equal:annee_debut',
-            'etat_d_avancement_physique' => 'required|numeric|min:0|max:100',
-            'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
+            'cout_cro' => 'nullable|numeric',
+            'cout_total_du_projet' => 'nullable|numeric',
+            'annee_debut' => 'required|integer|min:2015|max:2045',
+            'annee_fin_prevue' => 'required|integer|after_or_equal:annee_debut|max:2045',
+            'etat_d_avancement_physique' => 'nullable|numeric|min:0|max:100',
+            'etat_d_avancement_financier' => 'nullable|numeric|min:0|max:100',
             'commentaires' => 'nullable|string',
-            'id_province' => 'required|exists:provinces,id_province',
-            'id_commune' => 'required|exists:communes,id_commune',
+            'id_province' => 'nullable|exists:provinces,id_province',
+            'id_commune' => 'nullable|array',
+            'id_commune.*' => 'nullable|exists:communes,id_commune',
             'id_programme' => 'required|exists:programmes,id_programme',
         ]);
 
-        $projet->update($request->all());
+        $dataToUpdate = $validated;
+        unset($dataToUpdate['id_commune']);
+        $projet->update($dataToUpdate);
+        
+        if (!empty($validated['id_commune']) && $projet->commune->isNotEmpty()) {
+            $projet->commune()->sync($validated['id_commune']);
+        } else if($projet->commune->isNotEmpty()) {
+            $projet->commune()->detach();  
+        }
+
         return redirect()->route('projet.index')->with('success', 'Projet modifié avec succès.');
     }
 
