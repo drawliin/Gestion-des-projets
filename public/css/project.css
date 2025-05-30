@@ -450,13 +450,51 @@ table tbody tr:hover {
   background-color: #d4ac0d; /* Darker red on hover */
 }
 
-  @media (max-width: 768px) {
-    .form-row {
-      flex-direction: column;
-      gap: 15px;
-    }
+/* Change page link colors */
+.page-link {
+    color: #ffffff;            /* Default link color */
+    background-color: #007bff; /* Button background */
+    border-color: #007bff;
+}
 
-    .sidebar {
-      width: 200px;
-    }
+/* On hover */
+.page-link:hover {
+    color: #ffffff;
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Active page */
+.page-item.active .page-link {
+    color: #ffffff;
+    background-color: #FFA500; /* Active page background */
+    border-color: #FFA500;
+}
+
+/* Disabled links */
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+/* Optional: center and style "Showing X to Y of Z" */
+.pagination + div {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 8px;
+}
+
+
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
   }
+
+  .sidebar {
+    width: 200px;
+  }
+}
+

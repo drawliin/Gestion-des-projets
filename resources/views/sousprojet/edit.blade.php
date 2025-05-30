@@ -12,6 +12,7 @@
         @csrf
         @method('PUT')
 
+        @role("gestionnaire")
         <div class="form-row">
           <div class="form-group">
             <label for="id_projet">Projet parent</label>
@@ -67,18 +68,21 @@
             <input type="text" id="site" name="site" value="{{ old('site', $sousProjet->site) }}">
           </div>
         </div>
+        @endrole
 
         <div class="form-row">
+          @role("gestionnaire")
           <div class="form-group">
             <label for="statut">Statut</label>
             <input type="text" id="statut" name="statut" value="{{ old('statut', $sousProjet->statut) }}">
           </div>
+          @endrole
           <div class="form-group">
             <label for="source_de_financement">Source de financement</label>
             <input type="text" id="source_de_financement" name="source_de_financement" value="{{ old('source_de_financement', $sousProjet->source_de_financement) }}">
           </div>
         </div>
-
+        @role("gestionnaire")
         <div class="form-row">
           <div class="form-group">
             <label for="surface">Surface</label>
@@ -89,7 +93,9 @@
             <input type="text" id="lineaire" name="lineaire" value="{{ old('lineaire', $sousProjet->lineaire) }}">
           </div>
         </div>
+        @endrole
 
+        @role("gestionnaire")
         <div class="form-row">
           <div class="form-group">
             <label for="beneficiaire">Bénéficiaire</label>
@@ -101,13 +107,30 @@
             <input type="number" id="avancement_physique" name="avancement_physique" min="0" max="100" value="{{ old('avancement_physique', $sousProjet->avancement_physique) }}">
           </div>
         </div>
+        @endrole
 
+        @role("financier")
+        <div class="form-row">
+          <div class="form-group">
+            <label for="avancement_financier">Avancement Financier (%)</label>
+            <input type="text" id="avancement_financier" name="avancement_financier" value="{{ old('avancement_financier', $sousProjet->avancement_financier) }}">
+          </div>
+
+          <div class="form-group">
+            <label for="estimation_initiale"> Estimation Initiale </label>
+            <input type="number" id="estimation_initiale" name="estimation_initiale"  value="{{ old('estimation_initiale', $sousProjet->estimation_initiale) }}">
+          </div>
+        </div>
+        @endrole
+
+        @role("gestionnaire")
         <div class="form-row">
           <div class="form-group full-width">
             <label for="commentaires">Commentaires</label>
             <textarea id="commentaires" name="commentaires" rows="2">{{ old('commentaires', $sousProjet->commentaires) }}</textarea>
           </div>
         </div>
+        @endrole
 
         <div class="form-actions-top">
           <button class="btn-return" type="submit">Mettre à jour le sous-projet</button>

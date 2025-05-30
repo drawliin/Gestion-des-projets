@@ -197,18 +197,6 @@ form select {
 
             <h2>Suivi Financier</h2>
             <h1>Projets et Sous-Projets</h1>
-
-            <form action="{{ route('couts.index') }}" method="GET" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
-                <select name="projet_id" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                    <option value="">Tous les projets</option>
-                    @foreach($projets as $projet)
-                        <option value="{{ $projet->id_projet }}" {{ request('projet_id') == $projet->id_projet ? 'selected' : '' }}>
-                            {{ $projet->nom_du_projet }}
-                        </option>
-                    @endforeach
-                </select>
-
-            </form>
         </div>
 
         <table class="styled-table">
@@ -243,9 +231,6 @@ form select {
 </td>
 
                         <td>
-                    <a href="{{ route('couts.edit', $sp->code_du_sous_projet) }}" class="btn-action btn-edit" title="Modifier">
-                                     <i class="fas fa-edit"></i>
-                            </a>
 
                 <a href="{{ route('couts.show', $sp->code_du_sous_projet) }}" class="btn-action btn-view" title="Afficher">
                     <i class="fas fa-eye"></i>
@@ -257,9 +242,12 @@ form select {
             </tbody>
         </table>
 
-        <div class="pagination-wrapper">
-            {{ $sousProjets->withQueryString()->links() }}
+        <div class="d-flex flex-column align-items-start mt-4">
+            <div>
+                {{ $sousProjets->withQueryString()->links('pagination::bootstrap-5') }}
+            </div>
         </div>
+
     </div>
     <div class="form-header">
     <div class="form-actions">

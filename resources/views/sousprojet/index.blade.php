@@ -60,10 +60,12 @@
                         <a href="{{ route('sousprojet.show', $sousprojet->code_du_sous_projet) }}" class="btn-action btn-view" title="Voir détails">
                             <i class="fas fa-eye"></i>
                         </a>
-                        @role('gestionnaire')
+                        @role('gestionnaire|financier')
                             <a href="{{ route('sousprojet.edit', $sousprojet->code_du_sous_projet) }}" class="btn-action btn-edit" title="Modifier">
                                 <i class="fas fa-edit"></i>
                             </a>
+                        @endrole
+                        @role('gestionnaire')
                             <form action="{{ route('sousprojet.destroy', $sousprojet->code_du_sous_projet) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

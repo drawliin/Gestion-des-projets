@@ -104,8 +104,8 @@ class SousprojetController extends Controller
      */
     public function edit(string $id)
     {
-        if(!auth()->user()->hasRole('gestionnaire')){
-            return abort(403);
+        if(!auth()->user()->hasAnyRole(['gestionnaire', 'financier'])){
+            abort(403);
         }
 
         $sousProjet = SousProjetLocalise::findOrFail($id);
@@ -124,28 +124,34 @@ class SousprojetController extends Controller
     {
         $sousProjet = SousProjetLocalise::findOrFail($id);
 
-        $validated = $request->validate([
-            //'id_province' => 'required|exists:provinces,id_province',
-            //'id_projet' => 'required|exists:projets,id_projet',
-            'id_commune' => 'required|exists:communes,id_commune',
-            'nom_du_sous_projet' => 'required|string|max:100',
-            'secteur_concerne' => 'required|string|max:100',
-            'site' => 'required|string|max:100',
-            'source_de_financement' => 'required|string',
-            'beneficiaire' => 'required|string',
-            'estimation_initiale' => 'nullable|numeric',
-            'avancement_physique' => 'nullable|string|max:50',
-            'avancement_financier' => 'nullable|string|max:50',
-            // champs optionnels
-            'centre' => 'nullable|string|max:100',
-            'surface' => 'nullable|string|max:50',
-            'statut' => 'nullable|string|max:50',
-            'lineaire' => 'nullable|string|max:100',
-            'douars_desservis' => 'nullable|string',
-            'nature_de_l_intervention' => 'nullable|string',
-            'commentaires' => 'nullable|string',
-            'localite' => 'nullable|string',
-        ]);
+        if(auth()->user()->hasRole("gestionnaire")){
+            $validated = $request->validate([
+                'id_commune' => 'required|exists:communes,id_commune',
+                'nom_du_sous_projet' => 'required|string|max:100',
+                'secteur_concerne' => 'required|string|max:100',
+                'site' => 'required|string|max:100',
+                'source_de_financement' => 'required|string',
+                'beneficiaire' => 'required|string',
+                'estimation_initiale' => 'nullable|numeric',
+                'avancement_physique' => 'nullable|string|max:50',
+                'avancement_financier' => 'nullable|string|max:50',
+                // champs optionnels
+                'centre' => 'nullable|string|max:100',
+                'surface' => 'nullable|string|max:50',
+                'statut' => 'nullable|string|max:50',
+                'lineaire' => 'nullable|string|max:100',
+                'douars_desservis' => 'nullable|string',
+                'nature_de_l_intervention' => 'nullable|string',
+                'commentaires' => 'nullable|string',
+                'localite' => 'nullable|string',
+            ]);
+        }else if(auth()->user()->hasRole("financier")){
+            $validated = $request->validate([
+                'source_de_financement' => 'required|string',
+                'avancement_financier' => 'required|string',
+                'estimation_initiale' => 'required|numeric',
+            ]);
+        }
 
         $sousProjet->update($validated);
 

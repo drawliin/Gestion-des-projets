@@ -26,7 +26,8 @@
         @endif
 
         <h3>Détails du Projet</h3>
-
+        
+        @role("gestionnaire")
         <div class="form-row">
           <div class="form-group">
             <label for="code_du_projet">Code Projet *</label>
@@ -107,21 +108,23 @@
             <input type="number" id="annee_fin_prevue" name="annee_fin_prevue" min="2015" max="2045" value="{{ $projet->annee_fin_prevue }}" required>
           </div>
         </div>
+        @endrole
+
 
         <div class="form-row">
-          
+          @role("gestionnaire")
           <div class="form-group">
             <label for="etat_d_avancement_physique">Avancement Physique (%)</label>
             <input type="number" id="etat_d_avancement_physique" name="etat_d_avancement_physique" value="{{ $projet->etat_d_avancement_physique }}">
           </div>
+          @endrole
           
           @role("financier")
           <div class="form-group">
-            <label for="etat_d_avancement_financier">Avancement Financier (%)</label>
-            <input type="number" id="etat_d_avancement_financier" name="etat_d_avancement_financier" value="{{ $projet->etat_d_avancement_financier }}">
+            <label for="etat_d_avancement_financier">Avancement Financier (%) </label>
+            <input type="number" id="etat_d_avancement_financier" name="etat_d_avancement_financier" value="{{ intval($projet->etat_d_avancement_financier) }}">
           </div>
           @endrole
-
 
         </div>
           
@@ -141,12 +144,14 @@
         </div>
         @endrole
 
+        @role("gestionnaire")
         <div class="form-row">
           <div class="form-group full-width">
             <label for="commentaires">Commentaires</label>
             <textarea id="commentaires" name="commentaires">{{ $projet->commentaires }}</textarea>
           </div>
         </div>
+        @endrole
 
         <div class="form-actions-top">
           <button class="btn-return" type="submit">Mettre à jour le projet</button>
@@ -158,7 +163,9 @@
 @endsection
 
 <script>
-    const isDisabled = {{ $disabled ? 'true' : 'false' }};
+    @role("gestionnaire") 
+      const isDisabled = {{ $disabled ? 'true' : 'false' }};
+    @endrole
 
     function loadCommunes (provinceSelect, communeSelect) {
     const provinceId = provinceSelect.value;

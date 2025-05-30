@@ -99,7 +99,7 @@ class ProjetController extends Controller
 
     public function edit($id)
     {
-        if(!auth()->user()->hasRole('gestionnaire')){
+        if(!auth()->user()->hasAnyRole(['gestionnaire', 'financier'])){
             return redirect()->route('programme.index');
         }
 
@@ -115,21 +115,30 @@ class ProjetController extends Controller
     {
         $projet = Projet::with(['sousProjetsCommunes', 'commune'])->find($id);
 
-        $validated = $request->validate([
-            'code_du_projet' => 'required|unique:projets,code_du_projet,' . $id . ',id_projet',
-            'nom_du_projet' => 'required|string',
-            'cout_cro' => 'nullable|numeric',
-            'cout_total_du_projet' => 'nullable|numeric',
-            'annee_debut' => 'required|integer|min:2015|max:2045',
-            'annee_fin_prevue' => 'required|integer|after_or_equal:annee_debut|max:2045',
-            'etat_d_avancement_physique' => 'nullable|numeric|min:0|max:100',
-            'etat_d_avancement_financier' => 'nullable|numeric|min:0|max:100',
-            'commentaires' => 'nullable|string',
-            'id_province' => 'nullable|exists:provinces,id_province',
-            'id_commune' => 'nullable|array',
-            'id_commune.*' => 'nullable|exists:communes,id_commune',
-            'id_programme' => 'required|exists:programmes,id_programme',
-        ]);
+        if(auth()->user()->hasRole("gestionnaire")){
+            $validated = $request->validate([
+                'code_du_projet' => 'required|unique:projets,code_du_projet,' . $id . ',id_projet',
+                'nom_du_projet' => 'required|string',
+                'cout_cro' => 'nullable|numeric',
+                'cout_total_du_projet' => 'nullable|numeric',
+                'annee_debut' => 'required|integer|min:2015|max:2045',
+                'annee_fin_prevue' => 'required|integer|after_or_equal:annee_debut|max:2045',
+                'etat_d_avancement_physique' => 'nullable|numeric|min:0|max:100',
+                'etat_d_avancement_financier' => 'nullable|numeric|min:0|max:100',
+                'commentaires' => 'nullable|string',
+                'id_province' => 'nullable|exists:provinces,id_province',
+                'id_commune' => 'nullable|array',
+                'id_commune.*' => 'nullable|exists:communes,id_commune',
+                'id_programme' => 'required|exists:programmes,id_programme',
+            ]);
+        }else if(auth()->user()->hasRole("financier")){
+            $validated = $request->validate([
+                'cout_cro' => 'required|numeric',
+                'cout_total_du_projet' => 'required|numeric',
+                'etat_d_avancement_financier' => 'required|numeric|min:0|max:100',
+            ]);
+        }
+
 
         $dataToUpdate = $validated;
         unset($dataToUpdate['id_commune']);

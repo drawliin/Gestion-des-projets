@@ -49,10 +49,10 @@
             <th>Province</th>
             <th>Commune</th>
             <th>Année Début</th>
-            @role("gestionnaire")
+            @role("financier|gestionnaire")
             <th>Actions</th>
             @endrole
-            @hasanyrole("admin|financier|directeur")
+            @hasanyrole("admin|directeur")
             <th>Details</th>
             @endhasanyrole
           </tr>
@@ -81,10 +81,12 @@
                 <a href="{{ route('projet.show', $projet->id_projet) }}" class="btn-action btn-view" title="Voir">
                     <i class="fas fa-eye"></i>
                 </a>
-                @role('gestionnaire')
+                @role('gestionnaire|financier')
                   <a href="{{ route('projet.edit', $projet->id_projet) }}" class="btn-action btn-edit" title="Modifier">
                       <i class="fas fa-edit"></i>
                   </a>
+                @endrole
+                @role('gestionnaire')
                   <form action="{{ route('projet.destroy', $projet->id_projet) }}" method="POST" style="display:inline;">
                       @csrf
                       @method('DELETE')

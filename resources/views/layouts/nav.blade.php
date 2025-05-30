@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="{{ asset('css/project.css') }}">
   <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
 
 
@@ -161,6 +163,13 @@
               </a>
             </li>
             @endhasanyrole
+            @role('financier')
+            <li class="nav-item">
+              <a href="/couts" class="nav-link">
+                <i class="fa-solid fa-coins"></i> <span>Couts</span>
+              </a>
+            </li>
+            @endrole
             <li class="nav-item">
               <a href="{{ route('projet.index') }}" class="nav-link">
                 <i class="fas fa-project-diagram"></i> <span>Projets</span>
