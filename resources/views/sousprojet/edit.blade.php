@@ -95,20 +95,10 @@
             <label for="beneficiaire">Bénéficiaire</label>
             <input type="text" id="beneficiaire" name="beneficiaire" value="{{ old('beneficiaire', $sousProjet->beneficiaire) }}">
           </div>
-          <div class="form-group">
-            <label for="estimation_initiale">Estimation initiale (MAD)</label>
-            <input type="number" step="0.01" id="estimation_initiale" name="estimation_initiale" value="{{ old('estimation_initiale', $sousProjet->estimation_initiale) }}">
-          </div>
-        </div>
 
-        <div class="form-row">
           <div class="form-group">
             <label for="avancement_physique">Avancement physique (%)</label>
             <input type="number" id="avancement_physique" name="avancement_physique" min="0" max="100" value="{{ old('avancement_physique', $sousProjet->avancement_physique) }}">
-          </div>
-          <div class="form-group">
-            <label for="avancement_financier">Avancement financier (%)</label>
-            <input type="number" id="avancement_financier" name="avancement_financier" min="0" max="100" value="{{ old('avancement_financier', $sousProjet->avancement_financier) }}">
           </div>
         </div>
 

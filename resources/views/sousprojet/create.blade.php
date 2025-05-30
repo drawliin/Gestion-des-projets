@@ -65,11 +65,11 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="secteur_concerne">Secteur concerné</label>
+            <label for="secteur_concerne">Secteur concerné<span class="required">*</span></label>
             <input type="text" id="secteur_concerne" name="secteur_concerne" value='{{old("secteur_concerne")}}'>
           </div>
           <div class="form-group">
-            <label for="site">Site</label>
+            <label for="site">Site<span class="required">*</span></label>
             <input type="text" id="site" name="site" value='{{old("site")}}'>
           </div>
         </div>
@@ -80,7 +80,7 @@
             <input type="text" id="statut" name="statut" value='{{old("statut")}}'>
           </div>
           <div class="form-group">
-            <label for="source_de_financement">Source de financement</label>
+            <label for="source_de_financement">Source de financement<span class="required">*</span></label>
             <input type="text" id="source_de_financement" name="source_de_financement" value='{{old("source_de_financement")}}'>
           </div>
         </div>
@@ -97,25 +97,17 @@
         </div>
 
         <div class="form-row">
+
           <div class="form-group">
-            <label for="beneficiaire">Bénéficiaire</label>
+            <label for="beneficiaire">Bénéficiaire<span class="required">*</span></label>
             <input type="text" id="beneficiaire" name="beneficiaire" value='{{old("beneficiaire")}}'>
           </div>
-          <div class="form-group">
-            <label for="estimation_initiale">Estimation initiale (MAD)</label>
-            <input type="number" step="0.01" id="estimation_initiale" name="estimation_initiale" value='{{old("estimation_initiale")}}'>
-          </div>
-        </div>
 
-        <div class="form-row">
           <div class="form-group">
             <label for="avancement_physique">Avancement physique (%)</label>
             <input type="number" id="avancement_physique" name="avancement_physique" min="0" max="100" value='{{old("avancement_physique")}}'>
           </div>
-          <div class="form-group">
-            <label for="avancement_financier">Avancement financier (%)</label>
-            <input type="number" id="avancement_financier" name="avancement_financier" min="0" max="100" value='{{old("avancement_financier")}}'>
-          </div>
+         
         </div>
 
         <div class="form-row">
