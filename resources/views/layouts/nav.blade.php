@@ -99,19 +99,21 @@
         gap: 16px;
     }
 
-    .profile-icon {
-        width: 40px;
-        height: 40px;
-        background-color: #333;
-        color: white;
-        border-radius: 50%;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        transition: background 0.2s;
-    }
+.profile-ring {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    padding: 2px;
+    display: inline-block;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
     .profile-icon:hover {
         background-color: #555;
     }
@@ -211,7 +213,8 @@
           </span>
 
           <div class="right-header">
-              <a href="{{route("profile.index")}}" class="profile-icon" title="Mon Profil">
+              <a href="{{route("profile.index")}}" class="profile-ring" title="Mon Profil">
+                    <img src="/user.png" alt="Profile" class="profile-img">
                   {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
               </a>
 
