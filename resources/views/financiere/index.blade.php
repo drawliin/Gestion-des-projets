@@ -249,11 +249,7 @@ form select {
         </div>
 
     </div>
-    <div class="form-header">
-    <div class="form-actions">
-        <a href="#" class="btn-return">📁 Exporter en Excel</a>
-    </div>
-</div>
+
 
 </div>
 @endsection

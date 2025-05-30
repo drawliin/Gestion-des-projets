@@ -80,6 +80,13 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="d-flex flex-column align-items-start mt-4">
+            <div>
+                {{ $sousProjets->withQueryString()->links('pagination::bootstrap-5') }}
+            </div>
+        </div>
+        
     </div>
 </div>
 @endsection

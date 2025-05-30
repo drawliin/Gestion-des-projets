@@ -36,7 +36,7 @@ class SousprojetController extends Controller
             ->get();
 
         }else{
-            $sousProjets = SousProjetLocalise::with(['projet', 'commune.province'])->get();
+            $sousProjets = SousProjetLocalise::with(['projet', 'commune.province'])->paginate(8);
             
         }
         return view('sousprojet.index', compact('sousProjets'));
