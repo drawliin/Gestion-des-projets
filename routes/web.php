@@ -25,6 +25,7 @@ Route::middleware(['is.AdminOrGestionnaire'])->group(function (){
 });
 Route::middleware(['auth', 'role:gestionnaire'])->group(function (){
     Route::get('/communes/by-province/{province_id}', [CommuneController::class, 'getByProvince']);
+    Route::get('/sous-projets/by-projet/{id}', [ProjetController::class, 'getProvinceByProject']);
 });
 
 Route::middleware(['auth'])->group(function (){

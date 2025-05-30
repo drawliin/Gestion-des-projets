@@ -24,9 +24,9 @@ class CreateSousProjetsLocalisesTable extends Migration
             $table->text('source_de_financement');
             $table->text('nature_de_l_intervention')->nullable();
             $table->text('beneficiaire');
-            $table->decimal('estimation_initiale', 20, 2);
-            $table->string('avancement_physique', 50);
-            $table->string('avancement_financier', 50);
+            $table->decimal('estimation_initiale', 20, 2)->nullable();
+            $table->string('avancement_physique', 50)->nullable();
+            $table->string('avancement_financier', 50)->nullable();
             $table->text('commentaires')->nullable();
             $table->text('localite')->nullable();
             $table->timestamps();

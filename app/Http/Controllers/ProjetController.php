@@ -135,7 +135,7 @@ class ProjetController extends Controller
         unset($dataToUpdate['id_commune']);
         $projet->update($dataToUpdate);
         
-        if (!empty($validated['id_commune']) && $projet->commune->isNotEmpty()) {
+        if (!empty($validated['id_commune'])) {
             $projet->commune()->sync($validated['id_commune']);
         } else if($projet->commune->isNotEmpty()) {
             $projet->commune()->detach();  
@@ -186,6 +186,12 @@ class ProjetController extends Controller
             'total', 'totalSousProjets', 'avgPhysique', 'avgFinancier',
             'nonCommences', 'enCours', 'termines', 'projets', 'sousProjets'
         ));
+    }
+
+    public function getProvinceByProject($id){
+        $projet = Projet::find($id);
+        $province = Province::find($projet->id_province);
+        return response()->json($province);
     }
 
 

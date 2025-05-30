@@ -33,7 +33,7 @@
 
             <div class="form-row">
                 <label class="form-label">Province :</label>
-                <div class="form-value">{{ $sousProjet->province->description_province_fr ?? '' }}</div>
+                <div class="form-value">{{ $sousProjet->projet->province->description_province_fr ?? '' }}</div>
             </div>
 
             <div class="form-row">

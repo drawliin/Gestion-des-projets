@@ -14,14 +14,11 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="id_projet">Projet parent <span class="required">*</span></label>
-            <select id="id_projet" name="id_projet" required>
-              <option value="">Sélectionner</option>
-              @foreach($projets as $projet)
-                <option value="{{ $projet->id_projet }}" {{ $projet->id_projet == $sousProjet->id_projet ? 'selected' : '' }}>
+            <label for="id_projet">Projet parent</label>
+            <select id="id_projet" name="id_projet" disabled >
+                <option value="{{ $projet->id_projet }}">
                   {{ $projet->nom_du_projet }}
-                </option>
-              @endforeach
+                </option>      
             </select>
           </div>
           <div class="form-group">
@@ -40,13 +37,11 @@
         <div class="form-row">
           <div class="form-group">
             <label for="id_province">Province <span class="required">*</span></label>
-            <select id="id_province" name="id_province" required>
-              <option value="">Sélectionner</option>
-              @foreach($provinces as $province)
-                <option value="{{ $province->id_province }}" {{ $province->id_province == $sousProjet->id_province ? 'selected' : '' }}>
+            <select id="id_province" name="id_province" disabled>             
+                <option value="{{ $province->id_province }}" >
                   {{ $province->description_province_fr }}
                 </option>
-              @endforeach
+              
             </select>
           </div>
           <div class="form-group">

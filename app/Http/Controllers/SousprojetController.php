@@ -52,9 +52,8 @@ class SousprojetController extends Controller
         }
         $projets = Projet::all();
         $provinces = Province::all();
-        $communes = Commune::all();
 
-        return view('sousprojet.create', compact('projets', 'communes'));
+        return view('sousprojet.create', compact('projets', 'provinces'));
     }
 
     /**
@@ -63,7 +62,6 @@ class SousprojetController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_province' => 'required|exists:provinces,id_province',
             'id_commune' => 'required|exists:communes,id_commune',
             'id_projet' => 'required|exists:projets,id_projet',
             'nom_du_sous_projet' => 'required|string|max:100',
@@ -71,9 +69,9 @@ class SousprojetController extends Controller
             'site' => 'required|string|max:100',
             'source_de_financement' => 'required|string',
             'beneficiaire' => 'required|string',
-            'estimation_initiale' => 'nullable|numeric',
-            'avancement_physique' => 'required|string|max:50',
-            'avancement_financier' => 'nullable|string|max:50',
+            //'estimation_initiale' => 'nullable|numeric',
+            //'avancement_physique' => 'required|string|max:50',
+            //'avancement_financier' => 'nullable|string|max:50',
             'code_du_sous_projet' => 'required|unique:sous_projets_localises,code_du_sous_projet',
             // champs optionnels
             'centre' => 'nullable|string|max:100',
@@ -109,12 +107,13 @@ class SousprojetController extends Controller
         if(!auth()->user()->hasRole('gestionnaire')){
             return abort(403);
         }
-        $sousProjet = SousProjetLocalise::findOrFail($id);
-        $projets = Projet::all();
-        $provinces = Province::all();
-        $communes = Commune::all();
 
-        return view('sousprojet.edit', compact('sousProjet', 'projets', 'communes'));
+        $sousProjet = SousProjetLocalise::findOrFail($id);
+        $projet = Projet::findOrFail($sousProjet->id_projet);
+        $province = Province::findOrFail($projet->id_province);
+        $communes = Commune::where("id_province", $province->id_province)->get();
+
+        return view('sousprojet.edit', compact('sousProjet', 'projet', 'communes', 'province'));
 
     }
 
@@ -126,17 +125,17 @@ class SousprojetController extends Controller
         $sousProjet = SousProjetLocalise::findOrFail($id);
 
         $validated = $request->validate([
-            'id_province' => 'required|exists:provinces,id_province',
+            //'id_province' => 'required|exists:provinces,id_province',
+            //'id_projet' => 'required|exists:projets,id_projet',
             'id_commune' => 'required|exists:communes,id_commune',
-            'id_projet' => 'required|exists:projets,id_projet',
             'nom_du_sous_projet' => 'required|string|max:100',
             'secteur_concerne' => 'required|string|max:100',
             'site' => 'required|string|max:100',
             'source_de_financement' => 'required|string',
             'beneficiaire' => 'required|string',
-            'estimation_initiale' => 'required|numeric',
-            'avancement_physique' => 'required|string|max:50',
-            'avancement_financier' => 'required|string|max:50',
+            'estimation_initiale' => 'nullable|numeric',
+            'avancement_physique' => 'nullable|string|max:50',
+            'avancement_financier' => 'nullable|string|max:50',
             // champs optionnels
             'centre' => 'nullable|string|max:100',
             'surface' => 'nullable|string|max:50',
