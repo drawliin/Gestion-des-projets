@@ -29,6 +29,9 @@
 
     <div class="login-right">
       <!-- Optional: we can add text, logo, or leave it as a nice image -->
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
     </div>
   </div>
 </body>
