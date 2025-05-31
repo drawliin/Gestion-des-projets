@@ -23,9 +23,6 @@
         <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>
       </form>
-      <div class="login-footer">
-        <p><a href="#">Mot de passe oublié ?</a></p>
-      </div>
     </div>
 
     <div class="login-right">

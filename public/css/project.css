@@ -401,6 +401,9 @@ table tbody tr:hover {
     justify-content: flex-end;
     margin-top: 20px;
   }
+  .form-actions-top a {
+    text-decoration: none;
+  }
 
   .btn-return {
     background-color: var(--primary-color);

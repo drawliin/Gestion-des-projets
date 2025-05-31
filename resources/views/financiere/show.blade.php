@@ -47,9 +47,6 @@
         <!-- Bouton d'exportation -->
         <form method="GET" action="#" style="display:inline;">
         <div class="form-header">
-        <div class="form-actions">
-        <a href="#" class="btn-return">📁 Exporter en Excel</a>
-        </div>
      </form>
       </div>
 
