@@ -18,8 +18,9 @@
 :root {
   --primary-color: #1e293b;    /* Dark blue-gray background */
   --accent-color: #fbbf24;     /* Golden accent */
-  --text-color: #f3f4f6;       /* Light text */
+  --text-color: #0a0f18;       /* Light text */
   --sidebar-bg: #111827;       /* Darker sidebar */
+  --sidebar-color: #f3f4f6;       /* Darker sidebar */
   --sidebar-hover: #374151;    /* Hover on sidebar links */
   --header-bg: #f9fafb;        /* Light header */
   --header-text: #374151;      /* Darker header text */
@@ -43,7 +44,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
-  color: var(--text-color);
+  color: var(--sidebar-color);
   box-shadow: 2px 0 5px rgba(0,0,0,0.3);
 }
 
@@ -71,7 +72,7 @@
 .logo-text .logo-subtext {
   font-weight: 600;
   font-size: 1.1rem;
-  color: var(--text-color);
+  color: var(--sidebar-color);
 }
 
 /* Sidebar nav */
@@ -90,7 +91,7 @@
   align-items: center;
   gap: 12px;
   padding: 0.5rem 1rem;
-  color: var(--text-color);
+  color: var(--sidebar-color);
   text-decoration: none;
   border-radius: 6px;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -162,24 +163,20 @@
 }
 
 /* Profile icon */
-.profile-icon {
-  background-color: var(--accent-color);
-  color: var(--sidebar-bg);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.profile-ring {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 2px;
+    display: inline-block;
 }
 
-.profile-icon:hover {
-  background-color: #d97706; /* darker golden */
-  color: #fff;
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 /* Logout button */
@@ -307,8 +304,9 @@
           </span>
 
           <div class="right-header">
-              <a href="{{route("profile.index")}}" class="profile-icon" title="Mon Profil">
-                  {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+              <a href="{{route("profile.index")}}" class="profile-ring" title="Mon Profil">
+                <img src="/user.png" alt="Profile" class="profile-img">
+                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
               </a>
 
               <form action="{{ route('logout') }}" method="POST">
