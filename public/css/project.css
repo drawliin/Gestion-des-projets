@@ -87,6 +87,7 @@ table td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    color: #000 !important;
 }
 
 table th {

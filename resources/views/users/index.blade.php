@@ -69,4 +69,11 @@
         </table>
     </div>
 </div>
+
+<style>
+    .styled-table th,
+    .styled-table td {
+        color: #000 !important;
+    }
+</style>
 @endsection
